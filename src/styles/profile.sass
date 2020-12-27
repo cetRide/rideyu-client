@@ -1,0 +1,72 @@
+@import "mixins"
+.cover
+  @include shadow
+  position: relative
+  height: 230px
+  background-color: #008cff
+  border-radius: 20px
+
+.profile-pic
+  position: absolute
+  height: 120px
+  width: 120px
+  border-radius: 100%
+  background-color: #00c18b
+  z-index: 2
+  top: 80px
+  border: 2px solid white
+  @include center-horizontally
+  @include shadow
+
+.profile-body
+  position: absolute
+  background-color: white
+  z-index: 1
+  width: 100%
+  top: 140px
+  border-radius: 20px
+  padding-top: 50px
+  @include shadow
+  text-align: center
+
+  h1
+    margin: 0
+    padding: 10px 0 10px 0
+  h6
+    margin: 0
+    padding: 0 0 10px 0
+
+  .action-section
+    display: flex
+    justify-content: space-between
+    padding: 0 20px 20px 20px
+
+    .action-body
+      width: 100px
+      padding: 0
+      text-align: center
+      p
+        margin: 0
+        font-size: 12px
+      .action-btn
+        border-radius: 50%
+        height: 40px
+        width: 40px
+        border: 1px solid #008cff
+        margin-left: auto
+        margin-right: auto
+        margin-bottom: 0
+        @include shadow
+        cursor: pointer
+        p
+          font-size: 20px
+          margin: 0
+          line-height: 50px
+          color: #008cff
+        &:hover
+          p
+            color: white
+          background-color: #008cff
+
+
+
