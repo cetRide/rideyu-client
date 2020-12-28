@@ -1,4 +1,7 @@
-import React from 'react'
+import React from 'react';
+import {Divider} from 'antd';
+import {Link} from "react-router-dom";
+
 
 class Navbar extends React.Component {
 
@@ -33,7 +36,7 @@ class Navbar extends React.Component {
                         </div>
 
                         <div className="right-items">
-                            <div className="menu-sec">
+                            <div className="menu">
                                 <ul className="nav-item">
                                     <li><a href="/">Home</a></li>
                                     <li><a href="/">About Us</a></li>
@@ -41,38 +44,40 @@ class Navbar extends React.Component {
                                     <li><a href="/">Contact Us</a></li>
                                 </ul>
                                 <div className="buttons">
-                                    <a href="/" className="login-button">Log in</a>
-                                    <a href="/" className="button signup-button btn-primary">Sign up</a>
+                                    <Link className="login-button" to="/auth/login">
+                                        Log in</Link>
+                                    <Link className="button signup-button btn-primary" to="/auth/register">Sign
+                                        up</Link>
                                 </div>
                             </div>
-                           <div className="tesa">
-                               <div className="icon" onClick={this.openNav}>
-                                   &#9776;
-                               </div>
-                           </div>
+                            <div className="menu-icon">
+                                <div className="icon" onClick={this.openNav}>
+                                    &#9776;
+                                </div>
+                            </div>
                         </div>
                     </div>
-                <div id="mySidenav" className="sidenav">
-                    <div className="side-header">
-                        <div className="logo">
-                            rideyu.
+                    <div id="mySidenav" className="sidenav">
+                        <div className="side-header">
+                            <div className="logo">
+                                rideyu.
+                            </div>
+                            <div className="close-btn" onClick={this.closeNav}>
+                                &times;
+                            </div>
                         </div>
-                        <div className="closebtn" onClick={this.closeNav}>
-                            &times;
+                        <div className="links">
+                            <a href="/">Home</a>
+                            <a href="/">About Us</a>
+                            <a href="/">Our Work</a>
+                            <a href="/">Contact Us</a>
+                        </div>
+                        <Divider/>
+                        <div className="buttons buton">
+                            <a href="/" className="login-button">Log in</a>
+                            <a href="/" className="button signup-button btn-primary">Sign up</a>
                         </div>
                     </div>
-                    <div className="links">
-                        <a href="/">Home</a>
-                        <a href="/">About Us</a>
-                        <a href="/">Our Work</a>
-                        <a href="/">Contact Us</a>
-                    </div>
-                    <hr/>
-                    <div className="buttons buton">
-                        <a href="/" className="login-button">Log in</a>
-                        <a href="/" className="button signup-button btn-primary">Sign up</a>
-                    </div>
-                </div>
                 </header>
             </div>
         );
