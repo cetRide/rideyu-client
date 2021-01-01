@@ -1,7 +1,7 @@
 import React from "react";
 import {notification,message, Spin, Divider} from "antd";
 import {SmileOutlined, LoadingOutlined} from '@ant-design/icons';
-import Api from "./../../api"
+import Api from "./../../api";
 
 import {Link} from "react-router-dom";
 
@@ -15,6 +15,9 @@ class SignupComponent extends React.Component {
             email: '',
             password: ''
         };
+    }
+    componentDidMount() {
+        document.title = "Rideyu | Signup";
     }
     register(event) {
         event.preventDefault();

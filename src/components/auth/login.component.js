@@ -16,6 +16,10 @@ class LoginComponent extends React.Component {
         this.login = this.login.bind(this);
     }
 
+    componentDidMount() {
+        document.title = "Rideyu | Login";
+    }
+
     login(event) {
         this.setState({loading: true})
         event.preventDefault()
@@ -23,8 +27,8 @@ class LoginComponent extends React.Component {
             username: this.state.username,
             password: this.state.password
         })
-            .then(res =>{
-                if (res.data.status){
+            .then(res => {
+                if (res.data.status) {
                     notification.open({
                         message: 'Sign up',
                         description: res.data.message,
@@ -64,7 +68,7 @@ class LoginComponent extends React.Component {
                                     placeholder="Password"/>
                             </div>
                             <Spin spinning={this.state.loading} indicator={antIcon} delay={500}>
-                            <button className="btn" onClick={this.login}>Login</button>
+                                <button className="btn" onClick={this.login}>Login</button>
                             </Spin>
                             <Divider plain>Or login with</Divider>
                             <div className="social-login">
