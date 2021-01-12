@@ -1,7 +1,4 @@
 @import "mixins"
-@mixin align
-  display: flex
-  align-items: center
 
 .creat-post
   @include shadow
@@ -14,28 +11,26 @@
     border-radius: 50px
     padding: 0 10px
     font-size: 16px
-    @include align
+    @include center-hor
     &:hover
       background-color: #e3e6eb
   .upload-label
     padding: 5px
-    @include align
-    justify-content: center
+    @include center-hor-ver
     .upload-wrapper
       position: relative
       overflow: hidden
       display: inline-block
-      @include align
-      justify-content: center
+      @include center-hor-ver
       &:hover
         background-color: #e3e6eb
         border-radius: 8px
       .upload-btn
-        @include align
+        @include center-hor
         padding: 5px
         border-radius: 8px
         .item
-          @include align
+          @include center-hor
           justify-content: center
           font-weight: 500
       input[type=file]
@@ -66,8 +61,7 @@
     object-fit: cover
 .bottom-section
   margin-top: 10px
-  display: flex
-  align-items: center
+  @include center-hor
   justify-content: space-between
   button
     padding: 2px 8px
@@ -77,9 +71,9 @@
     //cursor: no-drop
 
 .action-btn
-  @include align
+  @include center-hor
   .btn-action
-    @include align
+    @include center-hor
     justify-content: center
     font-weight: 900
     height: 30px

@@ -15,7 +15,9 @@ class Home extends React.Component {
         this.open = this.open.bind(this);
         this.onChange = this.onChange.bind(this)
     }
-
+    componentDidMount() {
+        document.title = "Rideyu | Home of rides";
+    }
     open(state) {
         this.setState({
             displayModal: state

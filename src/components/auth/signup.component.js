@@ -47,14 +47,14 @@ class SignupComponent extends React.Component {
     render() {
         const antIcon = <LoadingOutlined style={{fontSize: 34, color: 'red'}} spin/>;
         return (
-            <div className="container-fluid">
-                <div className="login col-s-7 col-4">
-                    <div>
+            <div className="container-fluid forms">
+                <div className="form-container col-s-7 col-5">
+                    <div className="title">
                         <h1>
                             Create Account
                         </h1>
                     </div>
-                    <div className="login-form">
+                    <div className="form-input-container">
                         <div className="form-input">
                             <input
                                 type="text"

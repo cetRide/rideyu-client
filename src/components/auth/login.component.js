@@ -42,21 +42,19 @@ class LoginComponent extends React.Component {
                     message.error(res.data.message)
                 }
             })
-
     }
 
     render() {
-        const antIcon = <LoadingOutlined style={{fontSize: 34, color: 'red'}} spin/>;
+        const antIcon = <LoadingOutlined style={{fontSize: 34, color: 'white'}} spin/>;
         return (
-            <div>
-                <div className="container">
-                    <div className="login col-s-7 col-4">
-                        <div>
+            <div className="container-fluid forms">
+                    <div className="form-container col-s-7 col-5">
+                        <div className="title">
                             <h1>
                                 Sign in
                             </h1>
                         </div>
-                        <div className="login-form">
+                        <div className="form-input-container">
                             <div className="form-input">
                                 <input
                                     type="text"
@@ -83,7 +81,6 @@ class LoginComponent extends React.Component {
                             <p><Link to="/auth/register">Create Account</Link></p>
                         </div>
                     </div>
-                </div>
             </div>
         );
     }

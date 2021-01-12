@@ -5,8 +5,18 @@
   left: 50%
   -webkit-transform: translate(-50%, 0)
   transform: translate(-50%, 0)
+
 @mixin center
   left: 50%
   top: 50%
   transform: translate(-50%, -50%)
+
+@mixin center-hor-ver
+  display: flex
+  align-items: center
+  justify-content: center
+
+@mixin center-hor
+  display: flex
+  align-items: center
 
