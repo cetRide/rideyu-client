@@ -3,6 +3,8 @@ import {Divider, Spin, message, notification} from 'antd';
 import {Link} from "react-router-dom";
 import Api from "../../api"
 import {LoadingOutlined, SmileOutlined} from "@ant-design/icons";
+import {FcGoogle} from "react-icons/fc";
+import {FaRegEye, FaRegEyeSlash} from "react-icons/fa";
 
 class LoginComponent extends React.Component {
     constructor(props) {
@@ -11,9 +13,19 @@ class LoginComponent extends React.Component {
             loading: false,
             username: '',
             email: '',
-            password: ''
+            password: '',
+            type: 'password',
+            togglePass: true
         };
         this.login = this.login.bind(this);
+        this.showHide = this.showHide.bind(this);
+    }
+
+    showHide() {
+        this.setState({
+            type: this.state.type === 'password' ? 'input' : 'password',
+            togglePass: this.state.type !== 'password'
+        })
     }
 
     componentDidMount() {
@@ -48,39 +60,42 @@ class LoginComponent extends React.Component {
         const antIcon = <LoadingOutlined style={{fontSize: 34, color: 'white'}} spin/>;
         return (
             <div className="container-fluid forms">
-                    <div className="form-container col-s-7 col-5">
-                        <div className="title">
-                            <h1>
-                                Sign in
-                            </h1>
-                        </div>
-                        <div className="form-input-container">
-                            <div className="form-input">
-                                <input
-                                    type="text"
-                                    placeholder="Username or Email"/>
-                            </div>
-                            <div className="form-input">
-                                <input
-                                    type="password"
-                                    placeholder="Password"/>
-                            </div>
-                            <Spin spinning={this.state.loading} indicator={antIcon} delay={500}>
-                                <button className="btn" onClick={this.login}>Login</button>
-                            </Spin>
-                            <Divider plain>Or login with</Divider>
-                            <div className="social-login">
-                                <div className="icon">
-                                    <img src="https://img.icons8.com/fluent/30/000000/facebook-new.png" alt=""/>
-                                </div>
-                                <div className="icon">
-                                    <img src="https://img.icons8.com/color/30/000000/google-logo.png" alt=""/>
-                                </div>
-                            </div>
-                            <p>Forgot <a href="/">Username / Password?</a></p>
-                            <p><Link to="/auth/register">Create Account</Link></p>
-                        </div>
+                <div className="form-container col-5 col-s-8">
+                    <div className="title">
+                        <h1>
+                            Sign in
+                        </h1>
                     </div>
+                    <div className="form-input-container">
+                        <div className="form-input">
+                            <input
+                                type="text"
+                                placeholder="Username or Email"/>
+                        </div>
+                        <div className="form-pass">
+                            <input
+                                type={this.state.type}
+                                placeholder="Password"/>
+                            <div onClick={this.showHide} className="toggle-icon">
+                                {this.state.togglePass ?
+                                    <FaRegEye/> :
+                                    <FaRegEyeSlash/>}
+                            </div>
+                        </div>
+                        <div>Forgot <a href="/">Username / Password?</a></div>
+                        <Spin spinning={this.state.loading} indicator={antIcon} delay={500}>
+                            <button className="btn" onClick={this.login}>Login</button>
+                        </Spin>
+                        <Divider style={{margin: '10px'}} plain>Or</Divider>
+                        <div className="login-with">
+                            <div className="item icon"><FcGoogle/></div>
+                            <div className="item">
+                                Login with Google
+                            </div>
+                        </div>
+                        <p>Don't have an account yet? <Link to="/auth/register">Sign up</Link></p>
+                    </div>
+                </div>
             </div>
         );
     }

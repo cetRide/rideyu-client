@@ -1,11 +1,21 @@
 import React from 'react';
-import {Divider, Tooltip} from 'antd';
+import {Divider,Tooltip} from 'antd';
 import {Link} from "react-router-dom";
-import {FaRegBell} from "react-icons/fa";
-import {BiCommentDots, BiSearch, BiMessageSquareError} from "react-icons/bi";
+import {FaRegBell, FaUsers} from "react-icons/fa";
+import {
+    BiCommentDots,
+    BiListCheck,
+    BiSearch,
+    BiPlus,
+    BiShoppingBag,
+    BiHomeCircle,
+    BiMessageSquareError,
+    BiMenu
+} from "react-icons/bi";
 import {Avatar} from 'antd';
 import {UserOutlined, SettingOutlined, LogoutOutlined, QuestionCircleOutlined} from '@ant-design/icons';
-
+import {MdLiveHelp} from "react-icons/md";
+import {GiPayMoney} from "react-icons/gi";
 
 class Navbar extends React.Component {
 
@@ -18,11 +28,12 @@ class Navbar extends React.Component {
             signup: true,
             isLoggedIn: true,
             isToggleOn: true,
+            visible: true,
+            overlay: false,
+            overlay2: false,
             user: 'Cetric Okola'
         };
-        this.openNav = this.openNav.bind(this);
         this.handleClick = this.handleClick.bind(this)
-        this.closeNav = this.closeNav.bind(this);
         this.toggleNavAuthButtons = this.toggleNavAuthButtons.bind(this);
     }
 
@@ -30,11 +41,43 @@ class Navbar extends React.Component {
         this.setState((prevState) => ({
             isToggleOn: !prevState.isToggleOn
         }))
-        console.log(this.state.isToggleOn)
         if (this.state.isToggleOn) {
-            document.getElementById("sub-menu-id").style.width = "300px";
+            document.getElementById("sub-menu-id").style.width = "260px";
+            this.setState({
+                overlay2: true
+            })
         } else {
             document.getElementById("sub-menu-id").style.width = "0";
+            this.setState({
+                overlay2: false
+            })
+        }
+    }
+
+    closeOvelay = () => {
+        this.setState({
+            overlay2: false,
+            isToggleOn: true
+        })
+        document.getElementById("sub-menu-id").style.width = "0";
+    }
+    closeDrawer = () => {
+        this.setState({
+            visible: true,
+            overlay: false
+        })
+
+        document.getElementById("bottom-drawer").style.height = "0";
+    }
+    handleDrawer = () => {
+        this.setState((prevState) => ({
+            visible: !prevState.visible,
+            overlay: true
+        }))
+        if (this.state.visible) {
+            document.getElementById("bottom-drawer").style.height = "350px";
+        } else {
+            document.getElementById("bottom-drawer").style.height = "0";
         }
     }
 
@@ -53,18 +96,6 @@ class Navbar extends React.Component {
         }
     }
 
-    open() {
-        document.getElementById('icon').classList.toggle("open");
-    }
-
-    openNav() {
-        document.getElementById("mySidenav").style.width = window.screen.width + "px";
-    }
-
-    closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-    }
-
     render() {
         const linkItems = <div>
             <li><Link to="/">Home</Link></li>
@@ -79,6 +110,10 @@ class Navbar extends React.Component {
         }
         return (
             <div>
+                {this.state.overlay &&
+                <div className="overlay" onClick={this.closeDrawer}/>}
+                {this.state.overlay2 &&
+                <div className="overlay2" onClick={this.closeOvelay}/>}
                 <div className="nav-bar">
                     <div className="horizontal-nav">
                         <div className="left-side">
@@ -86,79 +121,102 @@ class Navbar extends React.Component {
                                 <Link to="/">{this.state.brand}</Link>
                             </div>
                         </div>
-                        <div className="center-items">
-                            <div className="nav-item-right">
-                                {linkItems}
-                            </div>
-                        </div>
                         <div className="right-side">
-                            {this.state.isLoggedIn ?
-                                <div className="action-icons">
-                                    <Tooltip placement="bottom" title="Search">
-                                        <div><Link to="/"><BiSearch/></Link></div>
-                                    </Tooltip>
-                                    <Tooltip placement="bottom" title="Messaging">
-                                        <div><Link to="/"><BiCommentDots/></Link></div>
-                                    </Tooltip>
-                                    <Tooltip placement="bottom" title="Notifications">
-                                        <div><Link to="/"><FaRegBell/></Link></div>
-                                    </Tooltip>
-                                    <Tooltip placement="bottom" title="Me">
+                            <div className="items1">
+                                <div className="nav-item-right">
+                                    {linkItems}
+                                </div>
+                            </div>
+                            <div className="items2">
+                                {this.state.isLoggedIn ?
+                                    <div className="user-icons">
+                                        <div className="action-icons">
+                                            <Tooltip placement="bottom" title="Search">
+                                                <div><Link to="/search"><BiSearch/></Link></div>
+                                            </Tooltip>
+                                            <Tooltip placement="bottom" title="Messaging">
+                                                <div><Link to="/"><BiCommentDots/></Link></div>
+                                            </Tooltip>
+                                            <Tooltip placement="bottom" title="Notifications">
+                                                <div><Link to="/"><FaRegBell/></Link></div>
+                                            </Tooltip>
+                                        </div>
                                         <div>
-                                            <Avatar onClick={this.handleClick} style={{cursor: 'pointer'}}
+                                            <Avatar onClick={this.handleClick}
+                                                    style={{cursor: 'pointer', marginRight: '20px'}}
                                                     icon={<UserOutlined/>}/>
                                         </div>
-                                    </Tooltip>
-                                </div> :
-                                <div className="action-buttons">
-                                    {this.state.login &&
-                                    <Link to="/auth/login" onClick={this.toggleNavAuthButtons} className="login-button">Log
-                                        in</Link>}
-                                    {this.state.signup &&
-                                    <Link to="/auth/register" onClick={this.toggleNavAuthButtons}
-                                          className="signup-button btn-primary">Sign
-                                        up</Link>}
+                                    </div> :
+                                    <div className="action-buttons">
+                                        {this.state.login &&
+                                        <Link to="/auth/login" onClick={this.toggleNavAuthButtons}
+                                              className="login-button">Log
+                                            in</Link>}
+                                        {this.state.signup &&
+                                        <Link to="/auth/register" onClick={this.toggleNavAuthButtons}
+                                              className="signup-button btn-primary">Sign
+                                            up</Link>}
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div id="sub-menu-id" className="sub-menu">
+                            <div className="menu-container">
+                                <div className="head">
+                                    <div className="the-avatar">
+                                        <Avatar icon={<UserOutlined/>}/>
+                                    </div>
+                                    <div>
+                                        <h4>{this.state.user}</h4>
+                                    </div>
                                 </div>
-                            }
-                        </div>
-                        <div className="menu-icon">
-                            <div className="icon" onClick={this.openNav}>
-                                &#9776;
-                            </div>
-                        </div>
-                    </div>
-                    <div id="mySidenav" className="side-nav">
-                        <div className="side-header">
-                            <div className="logo">
-                                <Link to="/">{this.state.brand}</Link>
-                            </div>
-                            <div className="close-btn" onClick={this.closeNav}>
-                                &#10005;
-                            </div>
-                        </div>
-                        <div className="links">
-                            {linkItems}
-                        </div>
-                        <Divider/>
-                    </div>
-                    <div id="sub-menu-id" className="sub-menu">
-                        <div className="menu-container">
-                            <div className="head">
-                                <div className="the-avatar">
-                                    <Avatar icon={<UserOutlined/>}/>
-                                </div>
-                                <div>
-                                    <h4>{this.state.user}</h4>
-                                </div>
-                            </div>
-                            <Divider style={{margin: '8px 0'}}/>
-                            <div className="contents">
-                                <button className="btn btn-primary">View Profile</button>
                                 <Divider style={{margin: '8px 0'}}/>
-                                <p><SettingOutlined style={styleIcons}/>Settings and privacy</p>
-                                <p><BiMessageSquareError style={styleIcons}/>Feedback</p>
-                                <p><QuestionCircleOutlined style={styleIcons}/>Help Center</p>
-                                <p><LogoutOutlined style={styleIcons}/>Sign Out</p>
+                                <div className="contents">
+                                    <button className="btn btn-primary">View Profile</button>
+                                    <Divider style={{margin: '8px 0'}}/>
+                                    <p><SettingOutlined style={styleIcons}/>Settings and privacy</p>
+                                    <p><BiMessageSquareError style={styleIcons}/>Feedback</p>
+                                    <p><QuestionCircleOutlined style={styleIcons}/>Help Center</p>
+                                    <p><LogoutOutlined style={styleIcons}/>Sign Out</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/*add post floting button*/}
+                    <div id="bottom-drawer" className="bottom-drawer-menu">
+                        <div className="close-btn-wrap">
+                            <div className="menu-item">Menu</div>
+                            <div onClick={this.closeDrawer} className="close-btn">&#10005;</div>
+                        </div>
+                        <div className="contents">
+                            <p><FaUsers style={styleIcons}/>Communities</p>
+                            <p><MdLiveHelp style={styleIcons}/>Services</p>
+                            <p><BiListCheck style={styleIcons}/>Bookings</p>
+                            <p><BiShoppingBag style={styleIcons}/>Marketplace</p>
+                            <p><GiPayMoney style={styleIcons}/>Finances</p>
+                            <div className="footer">
+                                <span>About</span>
+                                <span>Terms of Service</span>
+                                <span>Privacy</span>
+                                <span>Advertising</span>
+                            </div>
+                            <div className="footer2">
+                                <span>@2021 rideyu.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="floating-btn">
+                        <BiPlus/>
+                    </div>
+                    {/*more info drawer*/}
+                    <div className="bottom-bar-wrapper">
+                        <div className="bottom-bar">
+                            <div className="action-icons">
+                                <div className="menu-hum" onClick={this.handleDrawer}><BiMenu/></div>
+                                <div><Link to="/"><BiHomeCircle/></Link></div>
+                                <div><Link to="/search"><BiSearch/></Link></div>
+                                <div><Link to="/"><FaRegBell/></Link></div>
+                                <div><Link to="/"><BiCommentDots/></Link></div>
                             </div>
                         </div>
                     </div>

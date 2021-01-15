@@ -1,8 +1,20 @@
 @import "mixins"
 @import "variables"
+@mixin form-input
+  height: 40px
+  outline: none
+  width: 100%
+  border: none
+  font-size: 14px
+@mixin input-box
+  margin: 10px 0
+  cursor: pointer
+  border: 0.5px solid $hover-color
+  border-radius: 5px
+  padding: 0 10px
+
 .forms
-  display: flex
-  justify-content: center
+  @include center-hor-ver
   text-align: center
   .form-container
     @include shadow
@@ -15,6 +27,14 @@
         font-size: 20px
         font-weight: 900
     .form-input-container
+      .login-with
+        @include center-hor-ver
+        cursor: pointer
+        .icon
+          font-size: 20px
+        .item
+          padding: 5px
+          @include center-hor-ver
       button
         border-radius: 5px
         width: 100%
@@ -28,22 +48,17 @@
         a
           color: $primary-color
           text-decoration: none
-      .form-input
-        margin-top: 20px
-        position: relative
-        display: flex
+      .form-pass
+        @include input-box
+        @include center-hor
+        justify-content: space-between
+        .toggle-icon
+          margin-left: 5px
         input
-          outline: none
-          border: 0.5px solid $primary-color
-          height: 40px
-          font-size: 16px
-          border-radius: 5px
-          padding: 0 10px
-          flex: 1
-    .social-login
-      @include center-hor-ver
-      .icon
-        cursor: pointer
-        margin: 0 10px
+          @include form-input
+      .form-input
+        @include input-box
+        input
+          @include form-input
 
 

@@ -54,7 +54,7 @@ class Home extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid">
+            <div className="container-fluids">
                 {this.state.displayModal &&
                 <div className="overlay" onClick={this.open.bind(this, false)}/>}
                 <div className="creat-post col-5">
@@ -98,7 +98,6 @@ class Home extends React.Component {
                             <input type="file" accept="video/*" name="myfile" multiple/>
                         </div>
                     </div>
-
                     {/*create post modal*/}
                     {this.state.displayModal &&
                     <div className="dialog">
