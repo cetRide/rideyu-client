@@ -6,7 +6,6 @@ import {
     BiCommentDots,
     BiListCheck,
     BiSearch,
-    BiPlus,
     BiShoppingBag,
     BiHomeCircle,
     BiMessageSquareError,
@@ -182,7 +181,6 @@ class Navbar extends React.Component {
                             </div>
                         </div>
                     </div>
-                    {/*add post floting button*/}
                     <div id="bottom-drawer" className="bottom-drawer-menu">
                         <div className="close-btn-wrap">
                             <div className="menu-item">Menu</div>
@@ -204,9 +202,6 @@ class Navbar extends React.Component {
                                 <span>@2021 rideyu.</span>
                             </div>
                         </div>
-                    </div>
-                    <div className="floating-btn">
-                        <BiPlus/>
                     </div>
                     {/*more info drawer*/}
                     <div className="bottom-bar-wrapper">

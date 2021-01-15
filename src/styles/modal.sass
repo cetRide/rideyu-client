@@ -1,8 +1,8 @@
-
 @import "mixins"
 @keyframes zoominoutsinglefeatured
   0%
     transform: scale(1, 1)
+
 @mixin overlay
   position: fixed
   width: 100%
@@ -17,9 +17,11 @@
 .overlay
   @include overlay
   background-color: rgba(0, 0, 0, 0.06)
+
 .overlay2
   @include overlay
   background-color: rgba(0, 0, 0, 0.0)
+
 .dialog
   animation: zoominoutsinglefeatured 300ms ease 1
   border-radius: 15px
@@ -28,33 +30,33 @@
   @include shadow
   padding: 0 10px 10px 10px
   border: none
-  top: 200px
+  top: 50%
   position: fixed
   right: 50%
   background-color: white
-  transform: translate(50%, -20%)
+  transform: translate(50%, -50%)
+
   .head
-    display: flex
-    align-items: center
+    @include center-hor
     justify-content: space-between
     padding: 5px 10px 0 10px
+
     .modal-title
-      display: flex
-      align-items: center
-      font-size: 20px
+      @include center-hor
+      font-size: 15px
       font-weight: 500
       cursor: pointer
+
     .cancel-btn
-      font-size: 20px
+      font-size: 16px
       text-align: center
       cursor: pointer
-      display: flex
-      justify-content: center
-      align-items: center
+      @include center-hor-ver
       flex-direction: column
-      height: 40px
-      width: 40px
+      height: 30px
+      width: 30px
       border-radius: 50%
+
       &:hover
         background-color: #e3e6eb
 
@@ -68,15 +70,15 @@
     max-height: 400px
 
 
-
-
 .title-separator
   border: 0.3px solid #F5F5F5
 
 .modal-lg
   width: 90%
+
 .modal-md
   width: 70%
+
 .modal-sm
   width: 50%
 
@@ -87,8 +89,12 @@
     width: 90%
   .dialog
     width: 90%
+
+    .modal-body
+      max-height: 350px
   .modal-sm
     width: 90%
+
 @media all and (min-width: 540px) and (max-width: 1024px)
   .modal-lg
     width: 70%
@@ -97,5 +103,8 @@
   .dialog
     top: 200px
     width: 70%
+
+    .modal-body
+      max-height: 350px
   .modal-sm
     width: 70%
