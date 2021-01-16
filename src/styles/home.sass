@@ -14,89 +14,126 @@
   right: 0
   @include shadow
   cursor: pointer
-.feeds::-webkit-scrollbar
-  display: none
-.feeds
-  -ms-overflow-style: none
-.feeds
-  width: 53%
-  margin: auto
-  padding: 5px
-  height: 100vh
-  overflow: auto
-  .feeds-settings
-    @include center-hor
-    justify-content: space-between
-    .feeds-sort
-      color: $primary-color
-      font-size: 20px
-      height: 30px
-      width: 30px
-      cursor: pointer
-      @include center-hor-ver
-      border-radius: 50%
-      &:hover
-        background-color: $hover-color
-    .timeline-feeds
+.content-wrapper
+  display: flex
+  .more-details
+    margin-left: 10px
+    width: 20%
+    height: 500px
+    @include shadow
+    margin-top: 20px
+    border-radius: 8px
+  .user-shortcuts
+    width: 30%
+    padding-top: 20px
+    .profile
+      @include shadow
+      border-radius: 20px
+      width: 60%
+      position: relative
+      margin: auto
+  .feeds::-webkit-scrollbar
+    display: none
+  .feeds
+    -ms-overflow-style: none
+  .feeds
+    width: 53%
+    padding: 5px
+    height: 100vh
+    overflow: auto
+    .feeds-settings
       @include center-hor
-      margin: 10px 0
-      .item
+      justify-content: space-between
+      .feeds-sort
+        color: $primary-color
+        font-size: 20px
+        height: 30px
+        width: 30px
         cursor: pointer
-        padding: 10px 15px
-        font-weight: 700
-      .active
+        @include center-hor-ver
+        border-radius: 50%
+        &:hover
           background-color: $hover-color
-          border-radius: 8px
-      justify-content: flex-end
-  .posts-wrapper
-    margin-top: 10px
-    margin-bottom: 70px
-    .the-post
-      display: flex
-      margin-bottom: 15px
-      .the-avatar
-        margin-right: 10px
-      .details
-        width: 100%
-        border-radius: 6px
-        padding: 5px 10px
-        @include shadow
-        .head
-          @include center-hor
-          justify-content: space-between
-          .left-items
+      .timeline-feeds
+        @include center-hor
+        margin: 10px 0
+        .item
+          cursor: pointer
+          padding: 10px 15px
+          font-weight: 700
+        .active
+            background-color: $hover-color
+            border-radius: 8px
+        justify-content: flex-end
+    .posts-wrapper
+      margin-top: 10px
+      margin-bottom: 70px
+      .the-post
+        display: flex
+        margin-bottom: 15px
+        .the-avatar
+          margin-right: 10px
+        .details
+          width: 100%
+          border-radius: 6px
+          padding: 5px 10px
+          @include shadow
+          .head
             @include center-hor
-            .user-avatar
-              margin-right: 10px
-              display: none
-            .item-list
-              margin: 0 10px
-          .right-items
-            @include center-hor-ver
-            font-size: 20px
-            cursor: pointer
-            height: 30px
-            width: 30px
-            border-radius: 50%
-            &:hover
-              background-color: $hover-color
-        .the-body
-          font-family: 'Quicksand', sans-serif
-          height: 300px
-        .the-footer
-          padding: 0 15px
-          @include center-hor
-          justify-content: space-between
-          .the-items-count
-            @include center-hor-ver
-            font-family: 'Quicksand', sans-serif
-          .the-items-icons
-            @include center-hor
-            .item-icon
-              cursor: pointer
-              margin-left: 10px
-              font-size: 20px
+            justify-content: space-between
+            .left-items
+              @include center-hor
+              .user-avatar
+                margin-right: 10px
+                display: none
+              .item-list
+                margin: 0 10px
+            .right-items
               @include center-hor-ver
+              font-size: 20px
+              cursor: pointer
+              height: 30px
+              width: 30px
+              border-radius: 50%
+              &:hover
+                background-color: $hover-color
+          .the-body
+            font-family: 'Quicksand', sans-serif
+            height: 300px
+          .the-footer
+            padding: 0 15px
+            @include center-hor
+            justify-content: space-between
+            .the-items-count
+              @include center-hor-ver
+              font-family: 'Quicksand', sans-serif
+            .the-items-icons
+              @include center-hor
+              .item-icon
+                cursor: pointer
+                margin-left: 10px
+                font-size: 20px
+                @include center-hor-ver
+.sort-menu
+  @include shadow
+  height: auto
+  width: 0
+  position: fixed
+  z-index: 3
+  top: 110px
+  left: 30.8%
+  background-color: white
+  overflow-x: hidden
+  transition: 0.5s
+  padding: 0
+  cursor: pointer
+  border-radius: 10px
+  p
+    padding: 0 10px
+    border-radius: 4px
+    margin: 6px
+    &:hover
+      background-color: $hover-color
 
 .popover-style
   p
@@ -105,36 +142,50 @@
     &:hover
       background-color: $hover-color
 @media only screen and (max-width: 450px)
-  .feeds
-    width: 100%
-    .posts-wrapper
-      .the-post
-        .the-avatar
-          display: none
-        .details
-          .head
-            .left-items
-              .user-avatar
-                display: block
-              .item-list
-                margin: 0 5px
-
+  .content-wrapper
+    .more-details
+      display: none
+    .user-shortcuts
+      display: none
+    .feeds
+      width: 100%
+      margin: auto
+      .posts-wrapper
+        .the-post
+          .the-avatar
+            display: none
+          .details
+            .head
+              .left-items
+                .user-avatar
+                  display: block
+                .item-list
+                  margin: 0 5px
+  .sort-menu
+    left: 4%
 @media all and (min-width: 540px) and (max-width: 1024px)
-  .feeds
-    width: 80%
-    .posts-wrapper
-      .the-post
-        .the-avatar
-          display: none
-        .details
-          .head
-            .left-items
-              .user-avatar
-                display: block
-              .item-list
-                margin: 0 5px
+  .content-wrapper
+    .more-details
+      display: none
+    .user-shortcuts
+      display: none
+    .feeds
+      width: 100%
+      margin: auto
+      .posts-wrapper
+        .the-post
+          .the-avatar
+            display: none
+          .details
+            .head
+              .left-items
+                .user-avatar
+                  display: block
+                .item-list
+                  margin: 0 5px
 
-
+  .sort-menu
+    left: 6%
 
 
 

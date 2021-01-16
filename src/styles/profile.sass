@@ -1,19 +1,21 @@
 @import "mixins"
+@import "variables"
 .cover
   @include shadow
   position: relative
-  height: 230px
-  background-color: #008cff
-  border-radius: 20px
+  height: 85px
+  background-color: $hover-color
+  border-top-left-radius: 15px
+  border-top-right-radius: 15px
 
 .profile-pic
   position: absolute
-  height: 120px
-  width: 120px
+  height: 100px
+  width: 100px
   border-radius: 100%
-  background-color: #00c18b
+  background-color: grey
   z-index: 2
-  top: 80px
+  top: 20px
   border: 2px solid white
   @include center-horizontally
   @include shadow
@@ -23,12 +25,24 @@
   background-color: white
   z-index: 1
   width: 100%
-  top: 140px
-  border-radius: 20px
-  padding-top: 50px
+  top: 70px
+  border-radius: 15px
+  padding: 50px 10px 10px 10px
   @include shadow
   text-align: center
-
+  .view-profile
+    border-radius: 10px
+    padding: 5px 10px
+    background-color: $primary-color
+    color: white
+    cursor: pointer
+    @include shadow
+  .bar-one
+    @include center-hor-ver
+    div
+      @include center-hor-ver
+      cursor: pointer
+      padding: 5px
   h1
     margin: 0
     padding: 10px 0 10px 0
