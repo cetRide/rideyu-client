@@ -1,12 +1,14 @@
 import React from 'react'
 import {Tabs} from 'antd';
 import {BiXCircle} from "react-icons/bi";
+import Api from "../../api";
 
 class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchText: ""
+            searchText: "",
+           comments: {}
         };
         this.search = this.search.bind(this);
         this.clearForm = this.clearForm.bind(this);
@@ -14,10 +16,23 @@ class Search extends React.Component {
 
     componentDidMount() {
         document.title = "Rideyu | Search";
+        this.fetchComments();
     }
 
     search() {
 
+    }
+    fetchComments(){
+        Api.get(`/fetch-post-comments/1`, {
+            username: this.state.username,
+            password: this.state.password
+        })
+            .then(res => {
+                if (res.data.success) {
+                    this.setState({comments: res.data.comments})
+                    console.log(this.state.comments)
+                }
+            })
     }
 
     clearForm() {
@@ -56,6 +71,12 @@ class Search extends React.Component {
                             </TabPane>
                         </Tabs>
                     </div>
+              <div>
+                  <h1>my playground</h1>
+                  <div>
+                  
+                  </div>
+              </div>
                 </div>
             </div>
         );

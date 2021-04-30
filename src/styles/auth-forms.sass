@@ -6,6 +6,7 @@
   width: 100%
   border: none
   font-size: 14px
+
 @mixin input-box
   margin: 10px 0
   cursor: pointer
@@ -13,28 +14,41 @@
   border-radius: 5px
   padding: 0 10px
 
+.auth-error
+  text-align: left
+  color: $danger-color
+  padding: 0
+
 .forms
   @include center-hor-ver
-  text-align: center
+
+  .center-text
+    text-align: center
+
   .form-container
     @include shadow
     border-radius: 20px
     margin-top: 30px
     padding: 15px
+
     .title
       h1
-        font-family: 'Quicksand',sans-serif
+        font-family: 'Quicksand', sans-serif
         font-size: 20px
         font-weight: 900
+
     .form-input-container
       .login-with
         @include center-hor-ver
         cursor: pointer
+
         .icon
           font-size: 20px
+
         .item
           padding: 5px
           @include center-hor-ver
+
       button
         border-radius: 5px
         width: 100%
@@ -43,21 +57,28 @@
         font-size: 16px
         font-weight: 600
         background-color: $primary-color
+
       p
         color: #282c34
+
         a
           color: $primary-color
           text-decoration: none
+
       .form-pass
         @include input-box
         @include center-hor
         justify-content: space-between
+
         .toggle-icon
           margin-left: 5px
+
         input
           @include form-input
+
       .form-input
         @include input-box
+
         input
           @include form-input
 

@@ -1,6 +1,7 @@
 import React from "react";
 import {EditOutlined, UserOutlined} from '@ant-design/icons';
 import AddPost from "./posts/add-post";
+import Api from "../api"
 import {BiPlus, BiSliderAlt, BiHeart, BiDotsHorizontalRounded, BiDotsVerticalRounded} from "react-icons/bi";
 import {Avatar, Divider, Popover} from "antd";
 import {Link} from "react-router-dom";
@@ -17,16 +18,28 @@ class Home extends React.Component {
             maxRows: 10,
             file: null,
             isToggleOn: true,
-            overlay2: false
-        };
+            overlay2: false,
+            posts: []}
         this.open = this.open.bind(this);
+        this.getPosts = this.getPosts.bind(this);
     }
 
     componentDidMount() {
         document.title = "Rideyu | Home of rides";
+        this.getPosts()
+    }
+
+    getPosts() {
+        Api.get('fetch-posts').then(res => {
+            this.setState({posts: res.data.posts})
+        }).catch(error => {
+            console.log(error)
+        })
+
     }
 
     open(state) {
+        ''
         this.setState({
             displayModal: state
         });
@@ -55,6 +68,7 @@ class Home extends React.Component {
         })
         document.getElementById("sort-id").style.width = "0";
     }
+
     render() {
         const divider = {
             margin: '8px 0'
@@ -132,153 +146,57 @@ class Home extends React.Component {
                         </div>
                         {/*lists timeline posts*/}
                         <div className="posts-wrapper">
-                            <div className="the-post">
-                                <div className="the-avatar">
-                                    <Avatar size="large" icon={<UserOutlined/>}/>
-                                </div>
-                                <div className="details">
-                                    <div className="head">
-                                        <div className="left-items">
-                                            <div className="user-avatar">
-                                                <Avatar icon={<UserOutlined/>}/>
-                                            </div>
-                                            <div className="item-list">
-                                                cetric
-                                            </div>
-                                            <div className="item-list">
-                                                <Link to="/">Follow</Link>
-                                            </div>
-                                        </div>
-                                        <Popover placement="bottomRight" content={
-                                            <div className="popover-style">
-                                                <div>Posted - Fri 7:40AM</div>
-                                                <Divider style={divider}/>
-                                                <p>Save Post</p>
-                                                <p>Report Post</p>
-                                                <p>Report User</p>
-                                            </div>
-                                        } trigger="click">
-                                            <div className="right-items">
-                                                <BiDotsHorizontalRounded/>
-                                            </div>
-                                        </Popover>
+                            {this.state.posts.map((item) => {
+                                return <div className="the-post" key={item.ID}>
+                                    <div className="the-avatar">
+                                        <Avatar size="large" icon={<UserOutlined/>}/>
                                     </div>
-                                    <div className="the-body">
-                                        post1
-                                    </div>
-                                    <div className="the-footer">
-                                        <div className="the-items-count">
-                                            160 Likes
+                                    <div className="details">
+                                        <div className="head">
+                                            <div className="left-items">
+                                                <div className="user-avatar">
+                                                    <Avatar icon={<UserOutlined/>}/>
+                                                </div>
+                                                <div className="item-list">
+                                                    {item.Username}
+                                                </div>
+                                                <div className="item-list">
+                                                    <Link to="/">Follow</Link>
+                                                </div>
+                                            </div>
+                                            <Popover placement="bottomRight" content={
+                                                <div className="popover-style">
+                                                    <div>Posted - {item.CreatedAt}</div>
+                                                    <Divider style={divider}/>
+                                                    <p>Save Post</p>
+                                                    <p>Report Post</p>
+                                                    <p>Report User</p>
+                                                </div>
+                                            } trigger="click">
+                                                <div className="right-items">
+                                                    <BiDotsHorizontalRounded/>
+                                                </div>
+                                            </Popover>
                                         </div>
-                                        <div className="the-items-icons">
-                                            <div className="item-icon">
-                                                <BiHeart/>
-                                            </div>
-                                            <div className="item-icon">
-                                                <AiOutlineComment/>
-                                            </div>
+                                        <div className="the-body">
+                                            {item.Description}
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="the-post">
-                                <div className="the-avatar">
-                                    <Avatar size="large" icon={<UserOutlined/>}/>
-                                </div>
-                                <div className="details">
-                                    <div className="head">
-                                        <div className="left-items">
-                                            <div className="user-avatar">
-                                                <Avatar icon={<UserOutlined/>}/>
+                                        <div className="the-footer">
+                                            <div className="the-items-count">
+                                                160 Likes
                                             </div>
-                                            <div className="item-list">
-                                                Elvis
-                                            </div>
-                                            <div className="item-list">
-                                                <Link to="/">Unfollow</Link>
-                                            </div>
-                                        </div>
-                                        <Popover placement="bottomRight" content={
-                                            <div className="popover-style">
-                                                <div>Posted - Sat 7:40AM</div>
-                                                <Divider style={divider}/>
-                                                <p>Save Post</p>
-                                                <p>Report Post</p>
-                                                <p>Report User</p>
-                                            </div>
-                                        } trigger="click">
-                                            <div className="right-items">
-                                                <BiDotsHorizontalRounded/>
-                                            </div>
-                                        </Popover>
-                                    </div>
-                                    <div className="the-body">
-                                        post2
-                                    </div>
-                                    <div className="the-footer">
-                                        <div className="the-items-count">
-                                            24 Likes
-                                        </div>
-                                        <div className="the-items-icons">
-                                            <div className="item-icon">
-                                                <BiHeart/>
-                                            </div>
-                                            <div className="item-icon">
-                                                <AiOutlineComment/>
+                                            <div className="the-items-icons">
+                                                <div className="item-icon">
+                                                    <BiHeart/>
+                                                </div>
+                                                <div className="item-icon">
+                                                    <AiOutlineComment/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="the-post">
-                                <div className="the-avatar">
-                                    <Avatar size="large" icon={<UserOutlined/>}/>
-                                </div>
-                                <div className="details">
-                                    <div className="head">
-                                        <div className="left-items">
-                                            <div className="user-avatar">
-                                                <Avatar icon={<UserOutlined/>}/>
-                                            </div>
-                                            <div className="item-list">
-                                                Gloria
-                                            </div>
-                                            <div className="item-list">
-                                                <Link to="/">Unfollow</Link>
-                                            </div>
-                                        </div>
-                                        <Popover placement="bottomRight" content={
-                                            <div className="popover-style">
-                                                <div>Posted - Sat 7:40AM</div>
-                                                <Divider style={divider}/>
-                                                <p>Save Post</p>
-                                                <p>Report Post</p>
-                                                <p>Report User</p>
-                                            </div>
-                                        } trigger="click">
-                                            <div className="right-items">
-                                                <BiDotsHorizontalRounded/>
-                                            </div>
-                                        </Popover>
-                                    </div>
-                                    <div className="the-body">
-                                        post2
-                                    </div>
-                                    <div className="the-footer">
-                                        <div className="the-items-count">
-                                            1.1k Likes
-                                        </div>
-                                        <div className="the-items-icons">
-                                            <div className="item-icon">
-                                                <BiHeart/>
-                                            </div>
-                                            <div className="item-icon">
-                                                <AiOutlineComment/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            })}
                         </div>
                     </div>
                     <div className="more-details">

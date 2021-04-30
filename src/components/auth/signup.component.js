@@ -1,10 +1,9 @@
 import React from "react";
-import {notification, message, Spin, Divider} from "antd";
-import {SmileOutlined, LoadingOutlined} from '@ant-design/icons';
-import {FcGoogle} from "react-icons/fc";
 import Api from "./../../api";
 import {Link} from "react-router-dom";
-import {FaRegEye, FaRegEyeSlash} from "react-icons/fa";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faEye, faEyeSlash} from '@fortawesome/free-regular-svg-icons'
+import Spinner from "../loader";
 
 class SignupComponent extends React.Component {
     constructor(props) {
@@ -18,52 +17,104 @@ class SignupComponent extends React.Component {
             password: '',
             confirmPassword: '',
             type: 'password',
-            togglePass: true
+            togglePass: true,
+            errors: {},
+            errorMessage: ''
         };
     }
 
     componentDidMount() {
         document.title = "Rideyu | Signup";
     }
+
     showHide() {
         this.setState({
             type: this.state.type === 'password' ? 'input' : 'password',
             togglePass: this.state.type !== 'password'
         })
     }
+
+    validateData() {
+        let errors = {};
+        let formIsValid = true;
+        if (this.state.username === "") {
+            formIsValid = false;
+            errors["username"] = "Username cannot be empty";
+        }
+        if (typeof this.state.email !== "undefined") {
+            let lastAtPos = this.state.email.lastIndexOf('@');
+            let lastDotPos = this.state.email.lastIndexOf('.');
+
+            if (!(lastAtPos < lastDotPos && lastAtPos > 0 &&
+                this.state.email.indexOf('@@') === -1 &&
+                lastDotPos > 2 && (this.state.email.length - lastDotPos) > 2)) {
+                formIsValid = false;
+                errors["email"] = "Invalid email address";
+            }
+        }
+        if (this.state.email === "") {
+            formIsValid = false;
+            errors["email"] = "Email cannot be empty";
+        }
+
+        if (this.state.password === "") {
+            formIsValid = false;
+            errors["password"] = "Password cannot be empty";
+        }
+        if (this.state.confirmPassword !== this.state.password) {
+            formIsValid = false;
+            errors["confirmPassword"] = "Password and confirm password do not match";
+        }
+        this.setState({errors: errors});
+        return formIsValid;
+    }
+
     register(event) {
         event.preventDefault();
-        this.setState({loading: true})
-        Api.post(`/account/register`, {
-            username: this.state.username,
-            email: this.state.email,
-            password: this.state.password
-        })
-            .then(res => {
-                if (res.data.status) {
-                    notification.open({
-                        message: 'Sign up',
-                        description: res.data.message,
-                        icon: <SmileOutlined style={{color: '#108ee9'}}/>,
-                        placement: "bottomLeft",
-                        className: 'custom-class'
-                    });
-                    this.setState({loading: false})
-                    this.props.history.push('/');
-                } else {
-                    this.setState({loading: false})
-                    message.error(res.data.message);
-                }
+        this.setState({errors: {}})
+        if (this.validateData()) {
+            this.setState({loading: true})
+            Api.post(`/create-account`, {
+                username: this.state.username,
+                email: this.state.email,
+                password: this.state.password
             })
+                .then(res => {
+                    if (res.data.success) {
+                        this.setState({loading: false})
+                        this.props.history.push('/');
+                    }
+                }).catch(error => {
+                this.setState({loading: false})
+                let errors = {};
+                let errorMessage = error.response.data.error_message
+                if (errorMessage === 'Email address already used') {
+                    errors["email"] = errorMessage;
+                } else if (errorMessage === 'Username already used') {
+                    errors["username"] = errorMessage;
+                } else if (errorMessage === 'Password should contain a uppercase letter.') {
+                    errors["password"] = errorMessage;
+                } else if (errorMessage === 'Password should contain a lowercase letter.') {
+                    errors["password"] = errorMessage;
+                } else if (errorMessage === 'Password should contain a digit.') {
+                    errors["password"] = errorMessage;
+                } else if (errorMessage === 'Password should be atleast 8 characters.') {
+                    errors["password"] = errorMessage;
+                } else {
+                    this.setState({errorMessage: errorMessage})
+                }
+                this.setState({errors: errors});
+                this.setState({loading: false})
+            })
+        }
     }
 
     render() {
-        const antIcon = <LoadingOutlined style={{fontSize: 34, color: 'red'}} spin/>;
         return (
             <div className="container-fluid forms">
                 <div className="form-container col-s-7 col-5">
                     <div className="title">
-                        <h1>
+                        <h1 className="center-text">
                             Sign up
                         </h1>
                     </div>
@@ -75,6 +126,7 @@ class SignupComponent extends React.Component {
                                 onChange={event => this.setState({username: event.target.value})}
                                 placeholder="Username"/>
                         </div>
+                        <span className="auth-error">{this.state.errors["username"]}</span>
                         <div className="form-input">
                             <input
                                 type="text"
@@ -82,6 +134,7 @@ class SignupComponent extends React.Component {
                                 onChange={event => this.setState({email: event.target.value})}
                                 placeholder="Email"/>
                         </div>
+                        <span className="auth-error">{this.state.errors["email"]}</span>
                         <div className="form-pass">
                             <input
                                 type={this.state.type}
@@ -89,28 +142,24 @@ class SignupComponent extends React.Component {
                                 placeholder="Password"/>
                             <div onClick={this.showHide} className="toggle-icon">
                                 {this.state.togglePass ?
-                                    <FaRegEye/> :
-                                    <FaRegEyeSlash/>}
+                                    <FontAwesomeIcon icon={faEye}/> :
+                                    <FontAwesomeIcon icon={faEyeSlash}/>}
                             </div>
                         </div>
+                        <span className="auth-error">{this.state.errors["password"]}</span>
                         <div className="form-pass">
                             <input
                                 type={this.state.type}
                                 onChange={event => this.setState({confirmPassword: event.target.value})}
                                 placeholder="Confirm Password"/>
                         </div>
+                        <span className="auth-error">{this.state.errors["confirmPassword"]}</span>
 
-                        <Spin spinning={this.state.loading} indicator={antIcon} delay={500}>
-                            <button className="btn" onClick={this.register}>Register</button>
-                        </Spin>
-                        <Divider style={{margin: '10px'}} plain>Or</Divider>
-                        <div className="login-with">
-                            <div className="item icon"><FcGoogle/></div>
-                            <div className="item">
-                                Sign up with Google
-                            </div>
-                        </div>
-                        <p>Already have account? <Link to="/auth/login">Login</Link></p>
+                        {this.state.loading ?
+                            <button className="btn">
+                                <Spinner/><span className="button-text">Creating account ...</span></button> :
+                            <button className="btn" onClick={this.register}>Register</button>}
+                        <p className="center-text">Already have account? <Link to="/auth/login">Login</Link></p>
                     </div>
                 </div>
             </div>
