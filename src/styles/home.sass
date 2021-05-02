@@ -1,5 +1,42 @@
 @import "mixins"
 @import "variables"
+#search-icon
+  fill: black
+#search-button svg
+  width: 25px
+  height: 25px
+.chevron-right
+  height: 15px
+  width: 15px
+  border: 2px solid $primary-color
+  border-width: 2px 2px 0 0
+  transform: rotate(45deg)
+  cursor: pointer
+  margin-right: 10px
+
+  &:after
+    content: ''
+    display: block
+    height: 15px
+    width: 15px
+    border: 2px solid $primary-color
+    border-width: 2px 2px 0 0
+
+    transform: translate(5px, -6px)
+.footer
+  @include center-hor-ver
+  span
+    margin: 5px
+    cursor: pointer
+    &:hover
+      color: $primary-color
+.footer2
+  @include center-hor-ver
+.line-divider
+  width: 100%
+  display: block
+  height: 0.5px
+  background-color: $hover-color
 .floating-btn
   width: 40px
   z-index: 1
@@ -17,12 +54,33 @@
 .content-wrapper
   display: flex
   .more-details
-    margin-left: 10px
+    margin-right: 10px
+    padding: 10px
     width: 20%
-    height: 500px
+    height: 570px
     @include shadow
     margin-top: 20px
     border-radius: 8px
+    button
+      border: none
+      background-color: $primary-color
+      border-radius: 25px
+      width: 100%
+      height: 40px
+      color: white
+      margin-bottom: 10px
+      z-index: 1
+      @include shadow
+      cursor: pointer
+    p
+      font-weight: bold
+      padding: 2px 10px
+      font-size: 14px
+      cursor: pointer
+      &:hover
+        color: $primary-color
+        background-color: $info-color
+        border-radius: 20px
   .user-shortcuts
     width: 30%
     padding-top: 20px
@@ -141,6 +199,9 @@
     border-radius: 3px
     &:hover
       background-color: $hover-color
+.avatar-icon
+  font-size: 45px
+  color: $hover-color
 @media only screen and (max-width: 450px)
   .content-wrapper
     .more-details

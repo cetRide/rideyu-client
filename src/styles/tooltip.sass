@@ -1,0 +1,39 @@
+@import "mixins"
+.tooltip
+  position: relative
+.tooltip
+  &::after
+    background-color: white
+    @include shadow
+    border-radius: 10px
+    color: black
+    display: none
+    padding: 9px
+    font-size: 1rem
+    font-weight: lighter
+    position: absolute
+    z-index: 999
+    content: attr(data-tooltip)
+
+  &.top::after
+    top: 0
+    left: 50%
+    transform: translate(-50%, calc(-100% - 10px))
+
+  &.bottom::after
+    bottom: 0
+    left: 50%
+    transform: translate(-50%, calc(100% + 10px))
+
+  &.right::after
+    top: 0
+    right: 0
+    transform: translateX(calc(100% + 10px))
+
+  &.left::after
+    top: 0
+    left: 0
+    transform: translateX(calc(-100% - 10px))
+
+  &:hover::after
+    display: block

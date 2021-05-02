@@ -6,6 +6,8 @@
   border-radius: 15px
   padding: 8px 10px
   .text-area
+    .creat-post-icon
+      margin-right: 8px
     height: 40px
     border: 1px solid #e3e6eb
     border-radius: 50px
@@ -15,7 +17,7 @@
     @include center-hor
     &:hover
       background-color: #e3e6eb
-.drawer-contents
+.upload-contents
   border-radius: 8px
   min-height: 90px
   border: 1px solid #e3e6eb
@@ -28,6 +30,7 @@
     margin: 5px
     flex: 1
     font-size: 13px
+    color: #000c17
 .files
   border-radius: 8px
   margin: 5px 0
@@ -41,17 +44,18 @@
   @include center-hor
   justify-content: space-between
   .action-btn
-    @include center-hor
     .btn-action
-      @include center-hor
-      justify-content: center
-      border-radius: 8px
-      background-color: #e3e6eb
-      margin: 0 5px 0 10px
-      padding: 5px 15px
+      display: flex
+      justify-content: start
+      color: black
+      padding: 10px 0
       position: relative
+      cursor: pointer
+      font-size: 15px
+      .label-name
+        cursor: pointer
       .label-item
-        margin-right: 5px
+        margin-right: 10px
         cursor: pointer
       input[type=file]
         position: absolute
@@ -59,13 +63,14 @@
         top: 0
         opacity: 0
         cursor: pointer
-  .post-btn
-    padding: 3px 10px
-    font-family: 'Quicksand', sans-serif
-    border-radius: 6px
-    background-color: $primary-color
-    border: none
-    color: white
-    outline: none
-    cursor: pointer
-    @include shadow
+.post-btn
+  padding: 6px 0
+  width: 100%
+  font-family: 'Quicksand', sans-serif
+  border-radius: 6px
+  background-color: $primary-color
+  border: none
+  color: white
+  outline: none
+  cursor: pointer
+  @include shadow

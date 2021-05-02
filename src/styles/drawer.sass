@@ -1,16 +1,17 @@
-#mobile-menu-checkbox
+@import "mixins"
+@import "variables"
+#drawer-checkbox
   display: none
 
-  &:checked ~
-  #mobile-menu-overlay
+  &:checked ~ #drawer-overlay
     display: block
 
-    .mobile-menu
-      visibility: visible
-      -webkit-transform: translate3d(0, 0, 0)
-      transform: translate3d(0, 0, 0)
+  &:checked ~ .drawer
+    visibility: visible
+    -webkit-transform: translate3d(0, 0, 0)
+    transform: translate3d(0, 0, 0)
 
-#mobile-menu-overlay
+#drawer-overlay
   background-color: rgba(0, 0, 0, 0.6)
   display: none
   height: 100%
@@ -20,50 +21,48 @@
   width: 100%
   z-index: 100
 
-.mobile-menu
+.drawer
   position: fixed
+  overflow-y: scroll
   right: 0
   z-index: 101
   top: 0
   visibility: hidden
-  width: 300px
+  width: 500px
   height: 100%
-  background: #dcdcdc
+  background: white
   color: white
-  -webkit-transition: all 0.2s
-  transition: all 0.2s
-  -webkit-transform: translate3d(100%, 0)
+  -webkit-transition: all 0.4s
+  transition: all 0.4s
+  -webkit-transform: translate(100%, 0)
   transform: translate(100%, 0)
   padding: 10px
 
-  h1
-    color: black
+.drawer-header
+  color: black
+  display: inline-block
+  width: 100%
+  .drawer-title
+    cursor: pointer
+    &:hover
+      background-color: $hover-color
+      padding: 0 10px
+      border-radius: 8px
+    @include center-hor-ver
+    float: left
+    padding: 0
+    color: $primary-color
+    font-weight: bold
+    font-size: 18px
+    .creat-post-icon
+      margin-right: 8px
+  .close-drawer
+    float: right
+    @include center-hor-ver
+    label
+      cursor: pointer
 
-#mobile-menu-btn
-  background-color: transparent
-  border: none
-  color: #222
-  font-size: 30px
-  font-weight: 300
-  left: 0
-  line-height: 1.6em
-  position: relative
-  padding: 0
-  cursor: pointer
-  -webkit-touch-callout: none
-  -webkit-user-select: none
-  -khtml-user-select: none
-  -moz-user-select: none
-  -ms-user-select: none
-  user-select: none
+@media only screen and (max-width: 450px)
+  .drawer
+    width: 100%
 
-header
-  background-color: #333
-  padding: .5em
-
-  .menu-link
-    color: #fff
-    text-transform: uppercase
-
-#items
-  line-height: 1.75

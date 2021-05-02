@@ -1,21 +1,22 @@
 import React from "react";
-import {FileImageOutlined, VideoCameraAddOutlined} from "@ant-design/icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faQuestionCircle, faTools, faTags, faFileImage, faBriefcase} from "@fortawesome/free-solid-svg-icons";
 
 class AddPost extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             value: '',
-            rows: 2,
-            minRows: 2,
-            maxRows: 10,
+            rows: 15,
+            minRows: 15,
+            maxRows: 20,
             file: null
         };
         this.onChange = this.onChange.bind(this)
     }
 
     handleChange = (event) => {
-        const textareaLineHeight = 24;
+        const textareaLineHeight = 25;
         const {minRows, maxRows} = this.state;
         const previousRows = event.target.rows;
         event.target.rows = minRows;
@@ -62,11 +63,10 @@ class AddPost extends React.Component {
                 <div className="action-btn">
                     <div className="btn-action">
                         <div className="label-item">
-                            <FileImageOutlined
-                                style={{fontSize: '16px', color: '#008cff'}}/>
+                            <FontAwesomeIcon style={{color: '#008cff'}} icon={faFileImage}/>
                         </div>
-                        <div className="label-item">
-                            Photo
+                        <div className="label-name">
+                            Add Photo/Video
                         </div>
                         <input type="file"
                                ref="file"
@@ -78,23 +78,41 @@ class AddPost extends React.Component {
                     </div>
                     <div className="btn-action">
                         <div className="label-item">
-                            <VideoCameraAddOutlined
-                                style={{fontSize: '16px', color: '#F93154'}}/>
+                            <FontAwesomeIcon style={{color: '#F93154'}} icon={faTools}/>
                         </div>
+                        <div className="label-name">
+                            Ask for service
+                        </div>
+                    </div>
+                    <div className="btn-action">
                         <div className="label-item">
-                            Video
+                            <FontAwesomeIcon style={{color: '#00c18b'}} icon={faTags}/>
                         </div>
-                        <input type="file"
-                               ref="file"
-                               name="user[image]"
-                               accept="video/*"
-                               multiple={true}
-                               onChange={this.onChange}
-                        />
+                        <div className="label-name">
+                            Sell something
+                        </div>
+                    </div>
+                    <div className="btn-action">
+                        <div className="label-item">
+                            <FontAwesomeIcon style={{color: '#f2730b'}} icon={faBriefcase}/>
+                        </div>
+                        <div className="label-name">
+                            Post a job
+                        </div>
+                    </div>
+                    <div className="btn-action">
+                        <div className="label-item">
+                            <FontAwesomeIcon style={{color: '#F93154'}} icon={faQuestionCircle}/>
+                        </div>
+                        <div className="label-name">
+                            Ask a question
+                        </div>
                     </div>
                 </div>
-                <div className="post-btn">Post</div>
             </div>
+            <button className="post-btn">
+                Post
+            </button>
         </div>);
     }
 }
