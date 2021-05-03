@@ -1,5 +1,55 @@
 @import "mixins"
 @import "variables"
+.comment-wrapper
+  color: black
+  .info-text
+    text-align: center
+    font-size: 16px
+    padding: 10px
+  .add-comment
+    margin-top: 10px
+    @include center-hor
+    input
+      padding: 5px 10px
+      border: 1px solid $hover-color
+      outline: none
+      margin-left: 10px
+      border-radius: 20px
+      height: 40px
+      width: 300px
+  .comment-box
+    margin-top: 10px
+    display: flex
+    .message-box
+      border-radius: 8px
+      background-color: $hover-color
+      padding: 0px 10px
+      margin-left: 10px
+    .bottom-action
+      display: flex
+      span
+        cursor: pointer
+        font-size: 12px
+        margin-left: 15px
+#comment-overlay
+  background-color: rgba(0, 0, 0, 0.6)
+  display: none
+  height: 100%
+  right: 0
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 2
+#comment-checkbox
+  display: none
+
+  &:checked ~ #comment-overlay
+    display: block
+
+  &:checked ~ .add-comment
+    visibility: visible
+    -webkit-transform: translate3d(0, 0, 0)
+    transform: translate3d(0, 0, 0)
 .text-bold
   font-weight: bold
 .text-primary
@@ -131,6 +181,10 @@
         .active
             background-color: $hover-color
             border-radius: 8px
+            cursor: pointer
+            padding: 10px 15px
+            font-weight: 700
+            color: $primary-color
         justify-content: flex-end
     .posts-wrapper
       margin-top: 10px
@@ -249,6 +303,9 @@
           .the-avatar
             display: none
           .details
+            .the-body
+              .pop-over
+                width: 75%
             .head
               .left-items
                 .user-avatar
