@@ -11,12 +11,12 @@ import {
     BiMessageSquareError,
     BiMenu
 } from "react-icons/bi";
-import {Avatar} from 'antd';
-import {UserOutlined, SettingOutlined, LogoutOutlined, QuestionCircleOutlined} from '@ant-design/icons';
+import {SettingOutlined, LogoutOutlined, QuestionCircleOutlined} from '@ant-design/icons';
 import {MdLiveHelp} from "react-icons/md";
 import {GiPayMoney} from "react-icons/gi";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBell, faCommentAlt} from '@fortawesome/free-regular-svg-icons'
+import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 class Navbar extends React.Component {
 
     constructor(props) {
@@ -143,10 +143,9 @@ class Navbar extends React.Component {
                                             <div className="tooltip bottom" data-tooltip="Notifications"><Link
                                                 to="/"><FontAwesomeIcon icon={faBell}/></Link></div>
                                         </div>
-                                        <div>
-                                            <Avatar onClick={this.handleClick}
-                                                    style={{cursor: 'pointer', marginRight: '20px'}}
-                                                    icon={<UserOutlined/>}/>
+                                        <div className="the-avatar">
+                                            <FontAwesomeIcon onClick={this.handleClick} style={{cursor: 'pointer', marginRight: '20px'}}
+                                                             className="avatar-icon" icon={faUserCircle}/>
                                         </div>
                                     </div> :
                                     <div className="action-buttons">
@@ -166,7 +165,7 @@ class Navbar extends React.Component {
                             <div className="menu-container">
                                 <div className="head">
                                     <div className="the-avatar">
-                                        <Avatar icon={<UserOutlined/>}/>
+                                        <FontAwesomeIcon className="avatar-icon" icon={faUserCircle}/>
                                     </div>
                                     <div>
                                         <h4>{this.state.user}</h4>
