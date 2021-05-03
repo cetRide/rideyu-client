@@ -1,10 +1,9 @@
 import React from "react";
 import AddPost from "./posts/add-post";
 import Api from "../api"
-import {Link} from "react-router-dom";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCommentDots, faHeart, faEdit} from '@fortawesome/free-regular-svg-icons'
-import {faEllipsisH, faPlusCircle, faSlidersH, faUserCircle} from '@fortawesome/free-solid-svg-icons'
+import Post from "./posts/display-post";
+import {FiEdit,FiSliders,FiPlus} from "react-icons/fi";
+import {BiCopyright} from 'react-icons/bi'
 
 class Home extends React.Component {
     constructor(props) {
@@ -21,6 +20,7 @@ class Home extends React.Component {
             selected: {}
         }
         this.getPosts = this.getPosts.bind(this);
+        this.handlePopover = this.handlePopover.bind(this);
     }
 
     componentDidMount() {
@@ -37,13 +37,16 @@ class Home extends React.Component {
 
     }
 
-    handlePopover = (item) => {
+    handlePopover(item) {
+        console.log("toggled item", item);
         this.setState(
             prevState => {
                 const selected = {...prevState.selected};
                 selected[item] = !selected[item];
                 return {selected};
-            })
+            },
+            () => console.log("selected state", this.state.selected)
+        );
     }
 
     handleClick = () => {
@@ -65,14 +68,14 @@ class Home extends React.Component {
 
     render() {
         return (
+            <div style={{background: 'whitesmoke'}}>
             <div className="container-fluids">
-
                 <input type="checkbox" id="drawer-checkbox"/>
                 <div role="navigation" className="drawer">
                     <div className="drawer-header">
                         <div className="drawer-title">
                             <div className="creat-post-icon">
-                                <FontAwesomeIcon icon={faEdit}/>
+                                <FiEdit/>
                             </div>
                             <div>Share a post</div>
                         </div>
@@ -88,7 +91,7 @@ class Home extends React.Component {
                 <label htmlFor="drawer-checkbox" id="drawer-overlay"/>
                 <label htmlFor="drawer-checkbox">
                     <div className="floating-btn">
-                        <FontAwesomeIcon icon={faPlusCircle}/>
+                        <FiPlus/>
                     </div>
                 </label>
 
@@ -104,6 +107,7 @@ class Home extends React.Component {
                         <p>#questions & answers</p>
                         <p>#jobs</p>
                         <p>#companies</p>
+                        <p>#find dealers</p>
                         <p>#finances</p>
                         <button>Settings</button>
                         <div className="line-divider"/>
@@ -114,13 +118,13 @@ class Home extends React.Component {
                             <span>Advertising</span>
                         </div>
                         <div className="footer2">
-                            <span>@{new Date().getFullYear()} rideyu.</span>
+                            <span><BiCopyright/> {new Date().getFullYear()} rideyu.</span>
                         </div>
                     </div>
                     <div className="feeds">
                         <div className="feeds-settings">
                             <div onClick={this.handleClick} className="feeds-sort">
-                                <FontAwesomeIcon icon={faSlidersH}/>
+                                <FiSliders/>
                             </div>
                             <div className="timeline-feeds">
                                 <div className="active item">Explore</div>
@@ -131,7 +135,7 @@ class Home extends React.Component {
                             <div className="creat-post">
                                 <div className="text-area">
                                     <div className="creat-post-icon">
-                                        <FontAwesomeIcon icon={faEdit}/>
+                                        <FiEdit/>
                                     </div>
                                     <div>
                                         Create a post
@@ -141,53 +145,11 @@ class Home extends React.Component {
                         </label>
                         {/*lists timeline posts*/}
                         <div className="posts-wrapper">
-                            {this.state.posts.map((item) => {
-                                return <div className="the-post" key={item.ID}>
-                                    <div className="the-avatar">
-                                        <FontAwesomeIcon className="avatar-icon" icon={faUserCircle}/>
-                                    </div>
-                                    <div className="details">
-                                        <div className="head">
-                                            <div className="left-items">
-                                                <div className="user-avatar">
-                                                    <FontAwesomeIcon className="avatar-icon" icon={faUserCircle}/>
-                                                </div>
-                                                <div className="item-list">
-                                                    {item.Username}
-                                                </div>
-                                                <div className="item-list">
-                                                    <Link to="/">Follow</Link>
-                                                </div>
-                                            </div>
-                                            <div
-                                                onClick={() => this.handlePopover(item.id)}
-                                                className="right-items">
-                                                <FontAwesomeIcon icon={faEllipsisH}/>
-                                            </div>
-                                        </div>
-                                        <div className="the-body">
-                                            {item.Description}
-                                            <div style={{display: this.state.selected[item.id] ? 'block' : 'none'}}
-                                                 className="pop-over">
-                                                popover
-                                            </div>
-                                        </div>
-                                        <div className="the-footer">
-                                            <div className="the-items-count">
-                                                160 Likes
-                                            </div>
-                                            <div className="the-items-icons">
-                                                <div className="item-icon">
-                                                    <FontAwesomeIcon icon={faHeart}/>
-                                                </div>
-                                                <div className="item-icon">
-                                                    <FontAwesomeIcon icon={faCommentDots}/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            })}
+                            <Post
+                                item={this.state.posts}
+                                selected={this.state.selected}
+                                handlePopover={this.handlePopover}
+                            />
                         </div>
                     </div>
                     <div className="more-details">
@@ -200,6 +162,7 @@ class Home extends React.Component {
                     <p>Newest</p>
                 </div>
 
+            </div>
             </div>
         );
     }

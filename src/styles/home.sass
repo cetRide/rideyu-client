@@ -1,5 +1,13 @@
 @import "mixins"
 @import "variables"
+.text-bold
+  font-weight: bold
+.text-primary
+  color: $primary-color
+.text-secondary
+  color: $secondary-color
+.text-danger
+  color: $danger-color
 #search-icon
   fill: black
 #search-button svg
@@ -54,10 +62,11 @@
 .content-wrapper
   display: flex
   .more-details
+    background-color: white
     margin-right: 10px
     padding: 10px
     width: 20%
-    height: 570px
+    height: 600px
     @include shadow
     margin-top: 20px
     border-radius: 8px
@@ -132,6 +141,7 @@
         .the-avatar
           margin-right: 10px
         .details
+          background-color: white
           width: 100%
           border-radius: 6px
           padding: 5px 10px
@@ -152,6 +162,7 @@
               cursor: pointer
               height: 30px
               width: 30px
+              z-index: 1
               border-radius: 50%
               &:hover
                 background-color: $hover-color
@@ -159,7 +170,6 @@
             position: relative
             .pop-over
               @include shadow
-              height: 250px
               display: none
               padding: 5px 10px
               background-color: white
@@ -170,6 +180,14 @@
               z-index: 1
               position: absolute
               transition: 0.5s
+              cursor: pointer
+              font-weight: bold
+              p
+                padding: 3px
+                margin-top: 3px
+                &:hover
+                  background-color: $hover-color
+                  border-radius: 8px
             font-family: 'Quicksand', sans-serif
             height: 300px
           .the-footer
@@ -219,6 +237,7 @@
 @media only screen and (max-width: 450px)
   .content-wrapper
     .more-details
+      background-color: red
       display: none
     .user-shortcuts
       display: none

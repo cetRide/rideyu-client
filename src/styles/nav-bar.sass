@@ -33,44 +33,24 @@
   @include shadow
 .nav-bar
   .bottom-drawer-menu
-    font-family: 'Quicksand', sans-serif
+    overflow: auto
+    font-size: 20px
     width: 100%
-    height: 0
+    height: 100%
     position: fixed
     z-index: 4
     bottom: 0
     background-color: white
-    overflow-y: hidden
     transition: 0.5s
     padding: 0 10px
     cursor: pointer
-    border-top-left-radius: 20px
-    border-top-right-radius: 20px
+    display: none
     @include shadow
-    .close-btn-wrap
-      @include center-hor
-      justify-content: space-between
-      padding: 0 15px
-      .menu-item
-        color: $primary-color
-        font-size: 17px
-        font-weight: 900
-      .close-btn
-        @include center-hor-ver
-        font-size: 15px
-        height: 30px
-        width: 30px
-        border-radius: 50%
-        &:hover
-          background-color: $hover-color
+    .close-btn
+      padding: 10px
+      text-align: right
     .contents
       padding: 0 10px
-      .footer
-        @include center-hor-ver
-        margin: 0
-      .footer2
-        @include center-hor-ver
-        margin: 0
       span
         padding: 2px 5px
       p
@@ -78,6 +58,7 @@
         border-radius: 4px
         &:hover
           background-color: $hover-color
+          color: $primary-color
 
   .bottom-bar-wrapper
     display: none
@@ -119,6 +100,21 @@
         @include center-hor
       .nav-brand
         @include brand
+      .search-box
+        border-radius: 15px
+        margin-left: 20px
+        border: none
+        height: 30px
+        width: 250px
+        cursor: pointer
+        background-color: $hover-color
+        @include center-hor
+        padding: 5px 10px
+        color: slategrey
+        .search-icon
+          margin-right: 10px
+
+
     .right-side
       @include center-hor
       .items1
@@ -175,7 +171,8 @@
         border-radius: 50%
         cursor: pointer
     .sub-menu
-      width: 0
+      display: none
+      min-width: 250px
       position: fixed
       z-index: 3
       top: 55px
@@ -213,6 +210,9 @@
     .horizontal-nav
       .menu-icon
         display: block
+      .left-side
+        .search-box
+          width: 150px
       .right-side
         .items1
           display: none
