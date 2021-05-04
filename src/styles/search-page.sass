@@ -1,5 +1,18 @@
 @import "mixins"
 @import "variables"
+.search-tabs
+  display: flex
+  overflow: auto
+  .tab-item
+    padding: 10px
+    margin: 5px 10px
+    font-weight: bold
+    font-size: 16px
+    cursor: pointer
+    border-radius: 8px
+    &:hover
+      background-color: $hover-color
+      color: $primary-color
 .search-page
   display: block
   margin-top: 30px
@@ -7,11 +20,14 @@
     margin-bottom: 20px
     padding: 0 20px
     border-radius: 25px
-    border: 1px solid $primary-color
-    @include center-hor
+    border: 2px solid $hover-color
+    form
+      width: 100%
+      @include center-hor
     .clear-btn
       @include center-hor-ver
       font-size: 20px
+      cursor: pointer
     input
       outline: none
       border: none

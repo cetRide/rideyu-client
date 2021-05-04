@@ -91,7 +91,7 @@ class Home extends React.Component {
 
     render() {
         return (
-            <div style={{background: 'whitesmoke'}}>
+            <div style={{background: '#f2f2f2'}}>
                 <div className="container-fluids">
 
                     <input type="checkbox" id="comment-checkbox"/>
@@ -114,7 +114,7 @@ class Home extends React.Component {
                     </div>
 
                     <input type="checkbox" id="drawer-checkbox"/>
-                    <div role="navigation" className="drawer addpost">
+                    <div role="navigation" className="drawer add-post">
                         <div className="drawer-header">
                             <div className="drawer-title">
                                 <div className="creat-post-icon">
@@ -129,7 +129,9 @@ class Home extends React.Component {
                                 </label>
                             </div>
                         </div>
-                        <AddPost/>
+                        <div className="drawer-body">
+                            <AddPost/>
+                        </div>
                     </div>
                     <label htmlFor="drawer-checkbox" id="drawer-overlay"/>
                     <label htmlFor="drawer-checkbox">

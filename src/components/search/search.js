@@ -1,62 +1,117 @@
-import React from 'react'
-import {Tabs} from 'antd';
-import {BiXCircle} from "react-icons/bi";
+import React, {Suspense} from 'react'
+import {VscClose} from "react-icons/vsc";
+
+const Posts = React.lazy(() => import('./posts'));
+const People = React.lazy(() => import('./people'));
+
 
 class Search extends React.Component {
     constructor(props) {
         super(props);
+        this.timeout = 0;
         this.state = {
             searchText: "",
-           comments: {}
+            userInput: "",
+            type: 'people',
         };
-        this.search = this.search.bind(this);
-        this.clearForm = this.clearForm.bind(this);
+        this.clearText = this.clearText.bind(this);
+        this.renderComponent = this.renderComponent.bind(this);
+        this.submitSearchText = this.submitSearchText.bind(this);
+        this.doSearch = this.doSearch.bind(this);
     }
 
     componentDidMount() {
         document.title = "Rideyu | Search";
     }
 
-    search() {
-
+    doSearch() {
+        if (this.timeout) clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+            this.setText()
+        }, 300);
     }
 
+    renderComponent() {
+        let type = this.state.type
+        switch (type) {
+            case "posts":
+                return <Posts text={this.state.userInput}/>
+            case "people":
+                return <People text={this.state.userInput}/>
+            default:
+                return <People text={this.state.userInput}/>
+        }
+    }
 
-    clearForm() {
-        this.setState({searchText: ''})
+    submitSearchText(event) {
+        event.preventDefault();
+        this.setText()
+    }
+
+    setText() {
+        this.setState({userInput: this.state.searchText})
+    }
+
+    search = (type) => {
+        this.setState({type: type})
+    }
+
+    clearText() {
+        this.setState({searchText: '', userInput: ''})
     }
 
     render() {
-        const {TabPane} = Tabs;
+        const type = this.state.type
         return (
             <div className="container-fluid">
                 <div className="search-page">
                     <div className="search-bar">
-                        <input type="text"
-                               value={this.state.searchText}
-                               onChange={event => this.setState({searchText: event.target.value})}
-                               placeholder="Search rideyu."/>
-                        {this.state.searchText !== "" &&
-                        <div className="clear-btn" onClick={this.clearForm}><BiXCircle/></div>}
+                        <form onSubmit={this.submitSearchText} onChange={this.doSearch}>
+                            <input type="text"
+                                   value={this.state.searchText}
+                                   onChange={event => this.setState({searchText: event.target.value})}
+                                   placeholder="Search rideyu."/>
+                            {this.state.searchText !== "" &&
+                            <div className="tooltip bottom clear-btn" data-tooltip="close" onClick={this.clearText}><VscClose/></div>}</form>
                     </div>
+
+                    <div className="search-tabs">
+                        <div style={{
+                            backgroundColor: type === 'people' ? "#e3e6eb" : '',
+                            color: type === 'people' ? "#008cff" : ''
+                        }} className="tab-item" onClick={() => this.search('people')}>People
+                        </div>
+                        <div style={{
+                            backgroundColor: type === 'posts' ? "#e3e6eb" : '',
+                            color: type === 'posts' ? "#008cff" : ''
+                        }} className="tab-item" onClick={() => this.search('posts')}>Posts
+                        </div>
+                        <div style={{
+                            backgroundColor: type === 'communities' ? "#e3e6eb" : '',
+                            color: type === 'communities' ? "#008cff" : ''
+                        }} className="tab-item" onClick={() => this.search('communities')}>Communities
+                        </div>
+                        <div style={{
+                            backgroundColor: type === 'services' ? "#e3e6eb" : '',
+                            color: type === 'services' ? "#008cff" : ''
+                        }}
+                             className="tab-item" onClick={() => this.search('services')}>Services
+                        </div>
+                        <div
+                            style={{
+                                backgroundColor: type === 'jobs' ? "#e3e6eb" : '',
+                                color: type === 'jobs' ? "#008cff" : ''
+                            }}
+                            className="tab-item" onClick={() => this.search('jobs')}>Jobs
+                        </div>
+                    </div>
+                    <div className="line-divider"/>
+
                     <div>
-                        <Tabs defaultActiveKey="1" centered>
-                            <TabPane tab="People" key="1">
-                                <div>people</div>
-                            </TabPane>
-                            <TabPane tab="Posts" key="2">
-                                <div>posts</div>
-                            </TabPane>
-                            <TabPane tab="Communities" key="3">
-                                <div>groups</div>
-                            </TabPane>
-                            <TabPane tab="Services" key="4">
-                                <div>services</div>
-                            </TabPane>
-                            <TabPane tab="Finances" key="5">
-                                <div>finances</div>
-                            </TabPane>
-                        </Tabs>
+                        <Suspense fallback={<div>Loading...</div>}>
+                            {this.renderComponent()}
+                        </Suspense>
+
                     </div>
                 </div>
             </div>

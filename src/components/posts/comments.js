@@ -35,7 +35,6 @@ class Comments extends React.Component {
             <div>
                 <div className="comment-wrapper">
                     <div className="line-divider"/>
-
                     {this.state.comments.length < 1 &&
                     <p className="info-text">No comments</p>
                     }
@@ -47,30 +46,57 @@ class Comments extends React.Component {
                             <input type="text" placeholder="Your comment"/>
                         </div>
                     </div>
-                    {this.state.comments.map((item) => {
-                        const level1 = item.Path.split(",").length
-                        return (
-                            <div key={item.ID}>
-                                <div style={{marginLeft: level1 === 2 ? '30px' : level1 > 2 ? '60px' : '0'
-                                }} className="comment-box">
-                                    <div className="the-avatar">
-                                        <FontAwesomeIcon className="avatar-icon" icon={faUserCircle}/>
-                                    </div>
-                                    <div className="">
-                                        <div className="message-box">
-                                            <span className="text-bold">{item.Username}</span>
-                                            <p>{item.Comment}</p>
-                                        </div>
-                                        <div>
-                                            <div className="bottom-action">
-                                                <span>Like</span>
-                                                <span>Reply</span>
+                    {this.state.comments.length > 0 &&
+                    <div className="drawer-body">
+                        {this.state.comments.map((item) => {
+                            const length = item.Path.split(",").length
+                            return (
+                                <div key={item.ID}>
+                                    {length === 0 ?
+                                    <details className="collapse">
+                                        <summary className="title">expand</summary>
+                                        <div style={{
+                                            marginLeft: length === 2 ? '30px' : length > 2 ? '60px' : '0'
+                                        }} className=" description comment-box">
+                                            <div className="the-avatar">
+                                                <FontAwesomeIcon className="avatar-icon" icon={faUserCircle}/>
+                                            </div>
+                                            <div className="">
+                                                <div className="message-box">
+                                                    <span className="text-bold">{item.Username}</span>
+                                                    <p>{item.Comment}</p>
+                                                </div>
+                                                <div>
+                                                    <div className="bottom-action">
+                                                        <span>Like</span>
+                                                        <span>Reply</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>)
-                    })}
+                                    </details> :
+                                    <div style= {{
+                                        marginLeft: length === 2 ? '30px' : length > 2 ? '60px' : '0'
+                                    }}  className="comment-box">
+                                        <div className="the-avatar">
+                                            <FontAwesomeIcon className="avatar-icon" icon={faUserCircle}/>
+                                        </div>
+                                        <div className="">
+                                            <div className="message-box">
+                                                <span className="text-bold">{item.Username}</span>
+                                                <p>{item.Comment}</p>
+                                            </div>
+                                            <div>
+                                                <div className="bottom-action">
+                                                    <span>Like</span>
+                                                    <span>Reply</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>}
+                                </div>)
+                        })}
+                    </div>}
                 </div>
             </div>)
     }
