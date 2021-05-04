@@ -9,7 +9,7 @@ class People extends React.Component {
             }
         }
     }
-    componentWillMount() {
+    componentDidMount() {
         if (this.props.text !== '') {
             this.doSearch(this.props.text);
         }
@@ -21,7 +21,7 @@ class People extends React.Component {
 
     render() {
         return (
-            <div style={{background: '#f2f2f2', height: '100vh'}}>
+            <div>
                 <h1>People</h1>
                 <p>{this.props.type}</p>
                 <p>{this.props.text}</p>

@@ -4,7 +4,7 @@ import Api from "../api"
 import Post from "./posts/display-post";
 import {FiEdit, FiSliders, FiPlus} from "react-icons/fi";
 import {BiCopyright} from 'react-icons/bi'
-import Comments from "./posts/comments";
+import Comments from "./posts/comments/comments";
 
 class Home extends React.Component {
     constructor(props) {

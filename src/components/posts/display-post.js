@@ -1,7 +1,9 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
-import {faCommentDots, faHeart} from "@fortawesome/free-regular-svg-icons";
+import {GoCommentDiscussion} from "react-icons/go"
+import {AiOutlineHeart} from 'react-icons/ai'
+
 import React from "react";
 import {BiDotsHorizontalRounded} from 'react-icons/bi'
 
@@ -52,13 +54,13 @@ const Post = ({item, handlePopover,handleComments, selected}) => {
                                 </div>
                                 <div className="the-items-icons">
                                     <div className="item-icon">
-                                        <FontAwesomeIcon icon={faHeart}/>
+                                        <AiOutlineHeart/>
                                     </div>
                                     <label htmlFor="comment-checkbox">
                                         <div
                                             onClick={() => handleComments(item.ID)}
                                             className="item-icon">
-                                            <FontAwesomeIcon icon={faCommentDots}/>
+                                            <GoCommentDiscussion/>
                                         </div>
                                     </label>
                                 </div>
