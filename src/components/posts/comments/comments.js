@@ -362,7 +362,7 @@ class Comments extends React.Component {
                         </div>
                         <div style={{height: '50vh'}} className="likes-wrapper">
                             <div className="top-head">
-                                People who liked the reply
+                                People who liked the comment
                             </div>
                             <div className="user-list">
 

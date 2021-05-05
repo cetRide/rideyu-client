@@ -168,6 +168,7 @@ class Home extends React.Component {
         this.handleComments = this.handleComments.bind(this);
         this.handleToggleExplore = this.handleToggleExplore.bind(this);
         this.handleToggleMyFeeds = this.handleToggleMyFeeds.bind(this);
+        this.closePopover = this.closePopover.bind(this);
     }
 
     componentDidMount() {
@@ -197,7 +198,9 @@ class Home extends React.Component {
             toggleMyFeeds: true
         })
     }
-
+    closePopover(){
+        this.setState({selected: {}})
+    }
     handlePopover(item) {
         this.setState(
             prevState => {
@@ -339,6 +342,7 @@ class Home extends React.Component {
                                     selected={this.state.selected}
                                     handlePopover={this.handlePopover}
                                     handleComments={this.handleComments}
+                                    closePopover={this.closePopover}
                                 />
                             </div>
                         </div>

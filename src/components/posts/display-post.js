@@ -7,7 +7,7 @@ import {AiOutlineHeart} from 'react-icons/ai'
 import React from "react";
 import {BiDotsHorizontalRounded} from 'react-icons/bi'
 
-const Post = ({item, handlePopover,handleComments, selected}) => {
+const Post = ({item, handlePopover,handleComments, selected, closePopover}) => {
     return (
         <div>
             {item.map((item) => {
@@ -46,6 +46,7 @@ const Post = ({item, handlePopover,handleComments, selected}) => {
                                     <p>Copy link</p>
                                     <p className="text-danger">Block user</p>
                                     <p className="text-danger">Report</p>
+                                    <p className="text-danger" onClick={() => closePopover()}>Close</p>
                                 </div>
                             </div>
                             <div className="the-footer">
