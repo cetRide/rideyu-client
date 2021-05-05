@@ -4,7 +4,7 @@ import Api from "../api"
 import Post from "./posts/display-post";
 import {FiEdit, FiSliders, FiPlus} from "react-icons/fi";
 import {BiCopyright} from 'react-icons/bi'
-import Comments from "./posts/comments/comments";
+import CommentsDrawer from "./posts/comments/comments-drawer";
 
 class Home extends React.Component {
     constructor(props) {
@@ -19,11 +19,151 @@ class Home extends React.Component {
             toggleExplore: true,
             toggleMyFeeds: false,
             overlay2: false,
-            posts: [],
+            // posts: [],
+            posts: [
+                {
+                    "ID": 1,
+                    "Description": "my testing post one",
+                    "Username": "cetric",
+                    "User_id": "1",
+                    "CreatedAt": "2021-04-25T00:00:00Z",
+                    "ProfilePicture": {
+                        "String": "",
+                        "Valid": false
+                    },
+                    "PostMedia": [
+                        {
+                            "Id": {
+                                "String": "",
+                                "Valid": false
+                            },
+                            "FileUrl": {
+                                "String": "",
+                                "Valid": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ID": 2,
+                    "Description": "my testing post two",
+                    "Username": "cetric",
+                    "User_id": "1",
+                    "CreatedAt": "2021-04-25T00:00:00Z",
+                    "ProfilePicture": {
+                        "String": "",
+                        "Valid": false
+                    },
+                    "PostMedia": [
+                        {
+                            "Id": {
+                                "String": "",
+                                "Valid": false
+                            },
+                            "FileUrl": {
+                                "String": "",
+                                "Valid": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ID": 3,
+                    "Description": "my testing post three",
+                    "Username": "cetric",
+                    "User_id": "1",
+                    "CreatedAt": "2021-04-25T00:00:00Z",
+                    "ProfilePicture": {
+                        "String": "",
+                        "Valid": false
+                    },
+                    "PostMedia": [
+                        {
+                            "Id": {
+                                "String": "",
+                                "Valid": false
+                            },
+                            "FileUrl": {
+                                "String": "",
+                                "Valid": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ID": 4,
+                    "Description": "my testing post four",
+                    "Username": "fred",
+                    "User_id": "2",
+                    "CreatedAt": "2021-04-25T00:00:00Z",
+                    "ProfilePicture": {
+                        "String": "",
+                        "Valid": false
+                    },
+                    "PostMedia": [
+                        {
+                            "Id": {
+                                "String": "",
+                                "Valid": false
+                            },
+                            "FileUrl": {
+                                "String": "",
+                                "Valid": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ID": 5,
+                    "Description": "my testing post five",
+                    "Username": "fred",
+                    "User_id": "2",
+                    "CreatedAt": "2021-04-25T00:00:00Z",
+                    "ProfilePicture": {
+                        "String": "",
+                        "Valid": false
+                    },
+                    "PostMedia": [
+                        {
+                            "Id": {
+                                "String": "",
+                                "Valid": false
+                            },
+                            "FileUrl": {
+                                "String": "",
+                                "Valid": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ID": 6,
+                    "Description": "my testing post six",
+                    "Username": "fred",
+                    "User_id": "2",
+                    "CreatedAt": "2021-04-25T00:00:00Z",
+                    "ProfilePicture": {
+                        "String": "",
+                        "Valid": false
+                    },
+                    "PostMedia": [
+                        {
+                            "Id": {
+                                "String": "",
+                                "Valid": false
+                            },
+                            "FileUrl": {
+                                "String": "",
+                                "Valid": false
+                            }
+                        }
+                    ]
+                }
+            ],
             selected: {},
             postId: ''
         }
-        this.getPosts = this.getPosts.bind(this);
+        // this.getPosts = this.getPosts.bind(this);
         this.handlePopover = this.handlePopover.bind(this);
         this.handleComments = this.handleComments.bind(this);
         this.handleToggleExplore = this.handleToggleExplore.bind(this);
@@ -32,7 +172,7 @@ class Home extends React.Component {
 
     componentDidMount() {
         document.title = "Rideyu | Home of rides";
-        this.getPosts()
+        // this.getPosts()
     }
 
     getPosts() {
@@ -109,7 +249,7 @@ class Home extends React.Component {
                             </div>
                         </div>
                         <div>
-                            <Comments post_id={this.state.postId}/>
+                            <CommentsDrawer postId={this.state.postId}/>
                         </div>
                     </div>
 

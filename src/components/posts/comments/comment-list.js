@@ -4,7 +4,7 @@ import {BiDotsVerticalRounded} from 'react-icons/bi'
 import {AiOutlineHeart} from 'react-icons/ai'
 import React from "react";
 
-const CommentList = ({item, handleReply, handleMoreAction}) => {
+const CommentList = ({item, handleReply, handleViewCommentLikes, handleMoreAction}) => {
     return (
         <div>
             {item.map((item) => {
@@ -53,6 +53,7 @@ const CommentList = ({item, handleReply, handleMoreAction}) => {
                                         <div className="bottom-action">
                                             <span><AiOutlineHeart/></span>
                                             <span onClick={() => handleReply(item.ID)}>Reply</span>
+                                            <span onClick={() => handleViewCommentLikes(item.ID)}>16 likes</span>
                                             <span onClick={() => handleMoreAction(item.ID)}><BiDotsVerticalRounded/></span>
                                         </div>
                                     </div>
