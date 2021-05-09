@@ -1,13 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {BrowserRouter as Router} from 'react-router-dom';
-import AppRoutes from "./routes/route";
-import reportWebVitals from './reportWebVitals';
+import App from './App'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit'
+import rootReducer from './store'
+const store = configureStore({ reducer: rootReducer })
 
-ReactDOM.render(
-    <Router>
-        <AppRoutes/>
-    </Router>,
+render(
+    <Provider store={store}>
+        <App/>
+    </Provider>,
     document.getElementById('root')
-);
-reportWebVitals();
+)

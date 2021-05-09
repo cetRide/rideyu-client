@@ -1,9 +1,10 @@
 import React from "react";
-import Api from "../../../api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
-import {VscChromeClose} from "react-icons/vsc";
+import {VscChromeClose, VscArrowLeft} from "react-icons/vsc";
 import CommentList from "./comment-list";
+import {connect} from "react-redux";
+import {fetchComments} from '../../../store/slices/comments'
 
 
 class Comments extends React.Component {
@@ -246,11 +247,11 @@ class Comments extends React.Component {
                     "Path": "7"
                 }
             ],
-            // comments: [],
             isReply: false,
             commentId: '',
             moreAction: false,
-            viewCommentLikes: false
+            viewCommentLikes: false,
+            comment: {}
         }
         this.handleReply = this.handleReply.bind(this);
         this.handleMoreAction = this.handleMoreAction.bind(this);
@@ -259,18 +260,18 @@ class Comments extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.post_id !== prevProps.post_id) {
-            // this.fetchComments(this.props.post_id);
+            this.fetchComments(this.props.post_id);
         }
     }
 
     componentDidMount() {
         if (this.props.post_id !== '') {
-            // this.fetchComments(this.props.post_id);
+            this.fetchComments(this.props.post_id);
         }
     }
 
     handleReply(item) {
-        this.setState({commentId: item, isReply: true, moreAction: false})
+        this.setState({comment: item, isReply: true, moreAction: false})
     }
 
     handleViewCommentLikes(item) {
@@ -291,20 +292,9 @@ class Comments extends React.Component {
         }
     }
 
-    fetchComments(id) {
-        Api.get(`/fetch-post-comments/${id}`)
-            .then(res => {
-                if (res.data.success) {
-                    if (res.data.comments === null) {
-                        this.setState({comments: []})
-                    } else {
-                        this.setState({comments: res.data.comments})
-                        console.log(res.data.comments)
-                    }
-                }
-            })
+    fetchComments() {
+        this.props.fetchComments(this.props.post_id)
     }
-
     render() {
         return (
             <div>
@@ -324,23 +314,35 @@ class Comments extends React.Component {
                     {this.state.comments.length > 0 &&
                     <div className="drawer-body">
                         <CommentList
-                            item={this.state.comments}
+                            item={this.props.comments.comments}
+                            // item={this.state.comments}
                             handleReply={this.handleReply}
                             handleMoreAction={this.handleMoreAction}
-                            handleViewCommentLikes={this.handleViewCommentLikes}
                         />
                     </div>}
                     <div style={{display: this.state.isReply ? 'block' : 'none'}} className="reply">
-                        <div className="add-comment">
-                            <div className="the-avatar">
+                        <div className="top-head">
+                            <div className="close-reply" onClick={() => this.closeReplyForm('reply')}>
+                                <VscArrowLeft/></div>
+                            <div className="reply-btn">
+                                <button className="btn">Reply</button>
+                            </div>
+                        </div>
+                        <div className="comment-box">
+                            <div
+                                className="the-avatar">
                                 <FontAwesomeIcon className="avatar-icon" icon={faUserCircle}/>
                             </div>
-                            <div className="form-input">
-                                <input type="text" placeholder="Your reply"/>
-                                <span>Press enter to reply</span>
+                            <div className="">
+                                <div className="message-box">
+                                    <span className="text-bold">{this.state.comment.Username}</span>
+                                    <p>{this.state.comment.Comment}</p>
+                                </div>
                             </div>
-                            <div className="close-reply" onClick={() => this.closeReplyForm('reply')}>
-                                <VscChromeClose/></div>
+                        </div>
+                        <div className="text-area">
+                            <p>Replying to <span>@{this.state.comment.Username}</span></p>
+                            <textarea name="" id="" cols="30" rows="20"></textarea>
                         </div>
                     </div>
 
@@ -356,38 +358,15 @@ class Comments extends React.Component {
                         </div>
                     </div>
 
-                    <div style={{display: this.state.viewCommentLikes ? 'block' : 'none'}} className="more-action">
-                        <div onClick={() => this.closeReplyForm('likes')} className="close-btn">
-                            <VscChromeClose/>
-                        </div>
-                        <div style={{height: '50vh'}} className="likes-wrapper">
-                            <div className="top-head">
-                                People who liked the comment
-                            </div>
-                            <div className="user-list">
-
-                                <div className="user-box">
-                                    <div className="user">
-                                        <div className="user-avatar">
-                                            <FontAwesomeIcon className="avatar-icon" icon={faUserCircle}/>
-                                        </div>
-                                        <div className="user-username">
-                                            cetric
-                                        </div>
-                                    </div>
-
-                                    <div className="follow-btn">
-                                        <button className="follow">Follow</button>
-                                        {/*<button className="un-follow">Unfollow</button>*/}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>)
     }
 }
+const mapStateToProps = (state) => ({
+    comments: state.comments
+});
+const mapDispatchToProps = {
+    fetchComments
+}
 
-export default Comments;
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);

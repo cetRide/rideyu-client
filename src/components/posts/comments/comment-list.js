@@ -4,7 +4,7 @@ import {BiDotsVerticalRounded} from 'react-icons/bi'
 import {AiOutlineHeart} from 'react-icons/ai'
 import React from "react";
 
-const CommentList = ({item, handleReply, handleViewCommentLikes, handleMoreAction}) => {
+const CommentList = ({item, handleReply,handleMoreAction}) => {
     return (
         <div>
             {item.map((item) => {
@@ -16,7 +16,7 @@ const CommentList = ({item, handleReply, handleViewCommentLikes, handleMoreActio
                                 <summary className="title">expand</summary>
                                 <div style={{
                                     marginLeft: length === 2 ? '30px' : length > 2 ? '60px' : '0'
-                                }} className=" description comment-box">
+                                }} className="description comment-box">
                                     <div className="the-avatar">
                                         <FontAwesomeIcon className="avatar-icon" icon={faUserCircle}/>
                                     </div>
@@ -51,9 +51,7 @@ const CommentList = ({item, handleReply, handleViewCommentLikes, handleMoreActio
                                     </div>
                                     <div>
                                         <div className="bottom-action">
-                                            <span><AiOutlineHeart/></span>
-                                            <span onClick={() => handleReply(item.ID)}>Reply</span>
-                                            <span onClick={() => handleViewCommentLikes(item.ID)}>16 likes</span>
+                                            <span onClick={() => handleReply(item)}>Reply</span>
                                             <span onClick={() => handleMoreAction(item.ID)}><BiDotsVerticalRounded/></span>
                                         </div>
                                     </div>

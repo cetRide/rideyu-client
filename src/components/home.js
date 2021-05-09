@@ -1,10 +1,12 @@
 import React from "react";
 import AddPost from "./posts/add-post";
-import Api from "../api"
 import Post from "./posts/display-post";
 import {FiEdit, FiSliders, FiPlus} from "react-icons/fi";
 import {BiCopyright} from 'react-icons/bi'
 import CommentsDrawer from "./posts/comments/comments-drawer";
+import {connect} from "react-redux";
+
+import {fetchPosts,disLikePosts, likePosts} from '../store/slices/posts'
 
 class Home extends React.Component {
     constructor(props) {
@@ -19,151 +21,11 @@ class Home extends React.Component {
             toggleExplore: true,
             toggleMyFeeds: false,
             overlay2: false,
-            // posts: [],
-            posts: [
-                {
-                    "ID": 1,
-                    "Description": "my testing post one",
-                    "Username": "cetric",
-                    "User_id": "1",
-                    "CreatedAt": "2021-04-25T00:00:00Z",
-                    "ProfilePicture": {
-                        "String": "",
-                        "Valid": false
-                    },
-                    "PostMedia": [
-                        {
-                            "Id": {
-                                "String": "",
-                                "Valid": false
-                            },
-                            "FileUrl": {
-                                "String": "",
-                                "Valid": false
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ID": 2,
-                    "Description": "my testing post two",
-                    "Username": "cetric",
-                    "User_id": "1",
-                    "CreatedAt": "2021-04-25T00:00:00Z",
-                    "ProfilePicture": {
-                        "String": "",
-                        "Valid": false
-                    },
-                    "PostMedia": [
-                        {
-                            "Id": {
-                                "String": "",
-                                "Valid": false
-                            },
-                            "FileUrl": {
-                                "String": "",
-                                "Valid": false
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ID": 3,
-                    "Description": "my testing post three",
-                    "Username": "cetric",
-                    "User_id": "1",
-                    "CreatedAt": "2021-04-25T00:00:00Z",
-                    "ProfilePicture": {
-                        "String": "",
-                        "Valid": false
-                    },
-                    "PostMedia": [
-                        {
-                            "Id": {
-                                "String": "",
-                                "Valid": false
-                            },
-                            "FileUrl": {
-                                "String": "",
-                                "Valid": false
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ID": 4,
-                    "Description": "my testing post four",
-                    "Username": "fred",
-                    "User_id": "2",
-                    "CreatedAt": "2021-04-25T00:00:00Z",
-                    "ProfilePicture": {
-                        "String": "",
-                        "Valid": false
-                    },
-                    "PostMedia": [
-                        {
-                            "Id": {
-                                "String": "",
-                                "Valid": false
-                            },
-                            "FileUrl": {
-                                "String": "",
-                                "Valid": false
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ID": 5,
-                    "Description": "my testing post five",
-                    "Username": "fred",
-                    "User_id": "2",
-                    "CreatedAt": "2021-04-25T00:00:00Z",
-                    "ProfilePicture": {
-                        "String": "",
-                        "Valid": false
-                    },
-                    "PostMedia": [
-                        {
-                            "Id": {
-                                "String": "",
-                                "Valid": false
-                            },
-                            "FileUrl": {
-                                "String": "",
-                                "Valid": false
-                            }
-                        }
-                    ]
-                },
-                {
-                    "ID": 6,
-                    "Description": "my testing post six",
-                    "Username": "fred",
-                    "User_id": "2",
-                    "CreatedAt": "2021-04-25T00:00:00Z",
-                    "ProfilePicture": {
-                        "String": "",
-                        "Valid": false
-                    },
-                    "PostMedia": [
-                        {
-                            "Id": {
-                                "String": "",
-                                "Valid": false
-                            },
-                            "FileUrl": {
-                                "String": "",
-                                "Valid": false
-                            }
-                        }
-                    ]
-                }
-            ],
             selected: {},
             postId: ''
         }
-        // this.getPosts = this.getPosts.bind(this);
+
+        this.handleLikes = this.handleLikes.bind(this);
         this.handlePopover = this.handlePopover.bind(this);
         this.handleComments = this.handleComments.bind(this);
         this.handleToggleExplore = this.handleToggleExplore.bind(this);
@@ -173,16 +35,11 @@ class Home extends React.Component {
 
     componentDidMount() {
         document.title = "Rideyu | Home of rides";
-        // this.getPosts()
+        this.getPosts()
     }
 
     getPosts() {
-        Api.get('fetch-posts').then(res => {
-            this.setState({posts: res.data.posts})
-        }).catch(error => {
-            console.log(error)
-        })
-
+        this.props.fetchPosts()
     }
 
     handleToggleExplore() {
@@ -198,9 +55,43 @@ class Home extends React.Component {
             toggleMyFeeds: true
         })
     }
-    closePopover(){
+
+    closePopover() {
         this.setState({selected: {}})
     }
+
+    handleLikes(item, type) {
+        if (type === 'like'){
+            let thePostIndex = this.searchPosts(item, this.props.posts.posts)
+            this.props.likePosts(thePostIndex)
+        }
+        if (type === 'dislike'){
+            let index = this.searchPosts(item, this.props.posts.posts)
+            this.props.disLikePosts(index)
+        }
+    }
+
+    searchPosts(value, list) {
+        let first = 0;
+        let last = list.length - 1;
+        let position = -1;
+        let found = false;
+        let middle;
+
+        while (found === false && first <= last) {
+            middle = Math.floor((first + last) / 2);
+            if (list[middle].ID == value) {
+                found = true;
+                position = middle;
+            } else if (list[middle].ID > value) {
+                last = middle - 1;
+            } else {
+                first = middle + 1;
+            }
+        }
+        return position;
+    }
+
     handlePopover(item) {
         this.setState(
             prevState => {
@@ -239,7 +130,7 @@ class Home extends React.Component {
 
                     <input type="checkbox" id="comment-checkbox"/>
                     <div id="comment-overlay"/>
-                    <div  className="drawer add-comment">
+                    <div className="drawer add-comment">
                         <div className="drawer-header">
                             <div className="drawer-title">
                                 <div>Comments</div>
@@ -337,13 +228,20 @@ class Home extends React.Component {
                             </label>
                             {/*lists timeline posts*/}
                             <div className="posts-wrapper">
-                                <Post
-                                    item={this.state.posts}
-                                    selected={this.state.selected}
-                                    handlePopover={this.handlePopover}
-                                    handleComments={this.handleComments}
-                                    closePopover={this.closePopover}
-                                />
+                                {this.props.posts.loading ?
+                                    <div>
+                                        Loading ...
+                                    </div> :
+                                    <Post
+                                        item={this.props.posts.posts}
+                                        selected={this.state.selected}
+                                        handlePopover={this.handlePopover}
+                                        handleComments={this.handleComments}
+                                        handleLikes={this.handleLikes}
+                                        closePopover={this.closePopover}
+                                    />
+                                }
+
                             </div>
                         </div>
                         <div className="more-details">
@@ -362,4 +260,11 @@ class Home extends React.Component {
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+    posts: state.posts
+});
+const mapDispatchToProps = {
+    fetchPosts,likePosts,disLikePosts
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

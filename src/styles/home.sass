@@ -53,8 +53,6 @@
           outline: none
           color: white
 
-
-
 .comment-wrapper
   color: black
   position: relative
@@ -85,12 +83,68 @@
 
   .reply
     display: none
+    background-color: $background-color
     position: fixed
     background-color: white
     z-index: 4
     bottom: 0
     width: 100%
-    height: 150px
+    height: 100vh
+    padding: 15px 10px
+    margin: 5px 0
+    overflow-y: auto
+    display: flex
+    .text-area
+      margin-right: 10px
+      span
+        color: $primary-color
+        cursor: pointer
+      textarea
+        width: 100%
+        border: 1px solid $hover-color
+        outline: none
+        border-radius: 8px
+
+
+    .avatar-icon
+      font-size: 40px
+
+    .the-reply
+      @include center-hor-ver
+      padding: 0 10px
+      border: 1px solid red
+
+      .the-avatar
+        font-size: 35px
+        margin-right: 10px
+
+      .message
+        width: 100%
+        padding: 0
+
+        p
+          padding: 0
+
+    .top-head
+      display: flex
+      justify-content: space-between
+
+      .close-reply
+        @include center-hor-ver
+        cursor: pointer
+        height: 40px
+        width: 40px
+        margin: 0 10px
+        font-size: 20px
+
+      .reply-btn
+        button
+          margin-right: 10px
+          background-color: $primary-color
+          border-radius: 12px
+          padding: 5px 10px
+          font-size: 12px
+
 
   .more-info
     display: flex
@@ -106,13 +160,6 @@
     display: flex
     padding: 0 10px
 
-    .close-reply
-      @include center-hor-ver
-      cursor: pointer
-      height: 40px
-      width: 40px
-      margin: 0 10px
-      font-size: 20px
 
     .the-avatar
       font-size: 35px
@@ -349,6 +396,9 @@
         .the-avatar
           margin-right: 10px
 
+          .avatar-icon
+            font-size: 40px
+
         .details
           background-color: white
           width: 100%
@@ -367,8 +417,14 @@
                 margin-right: 10px
                 display: none
 
+                .avatar-icon
+                  font-size: 35px
+
               .item-list
                 margin: 0 10px
+
+              .follow-icon
+                font-size: 17px
 
             .right-items
               @include center-hor-ver
@@ -415,16 +471,11 @@
             @include center-hor
             justify-content: space-between
 
-            .the-items-count
-              @include center-hor-ver
-              font-family: 'Quicksand', sans-serif
-
             .the-items-icons
               @include center-hor
 
               .item-icon
                 cursor: pointer
-                margin-left: 10px
                 font-size: 20px
                 @include center-hor-ver
 

@@ -1,12 +1,13 @@
-import './App.sass';
-import Navbar from "./components/layout/navbar";
-import React from "react";
+import React from 'react';
+import {BrowserRouter as Router} from 'react-router-dom';
+import AppRoutes from "./routes/route";
 
-function App() {
-    return (
-        <div className="App">
-            <Navbar/>
-        </div>
+const App = () => {
+    return(
+        <Router>
+            <AppRoutes/>
+        </Router>
     );
 }
-export default App;
+export default App
+

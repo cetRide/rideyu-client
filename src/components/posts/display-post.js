@@ -1,13 +1,17 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
-import {GoCommentDiscussion} from "react-icons/go"
-import {AiOutlineHeart} from 'react-icons/ai'
+import {GoComment} from "react-icons/go"
+import {AiOutlineHeart, AiFillHeart} from 'react-icons/ai'
+import {BsBookmarkPlus} from "react-icons/bs"
+import {CgUserAdd} from "react-icons/cg"
+
 
 import React from "react";
 import {BiDotsHorizontalRounded} from 'react-icons/bi'
 
-const Post = ({item, handlePopover,handleComments, selected, closePopover}) => {
+const Post = ({item, handlePopover, handleComments, selected, closePopover, handleLikes}) => {
+
     return (
         <div>
             {item.map((item) => {
@@ -26,8 +30,8 @@ const Post = ({item, handlePopover,handleComments, selected, closePopover}) => {
                                     <div className="item-list">
                                         {item.Username}
                                     </div>
-                                    <div className="item-list">
-                                        <Link to="/">Follow</Link>
+                                    <div className="item-list follow-icon">
+                                        <Link to="/"><CgUserAdd/></Link>
                                     </div>
                                 </div>
                                 <div
@@ -42,7 +46,6 @@ const Post = ({item, handlePopover,handleComments, selected, closePopover}) => {
                                      className="pop-over">
                                     <p>Created at {item.CreatedAt}</p>
                                     <div className="line-divider"/>
-                                    <p>Save post</p>
                                     <p>Copy link</p>
                                     <p className="text-danger">Block user</p>
                                     <p className="text-danger">Report</p>
@@ -50,21 +53,28 @@ const Post = ({item, handlePopover,handleComments, selected, closePopover}) => {
                                 </div>
                             </div>
                             <div className="the-footer">
-                                <div className="the-items-count">
-                                    160 Likes
-                                </div>
                                 <div className="the-items-icons">
                                     <div className="item-icon">
-                                        <AiOutlineHeart/>
+                                        {item.LikeStatus === '1' ?
+                                            <AiFillHeart className="text-danger"
+                                                         onClick={() => handleLikes(item.ID, 'dislike')}/> :
+                                            <AiOutlineHeart onClick={() => handleLikes(item.ID, 'like')}/>}
                                     </div>
                                     <label htmlFor="comment-checkbox">
                                         <div
+                                            style={{marginLeft: '10px'}}
                                             onClick={() => handleComments(item.ID)}
                                             className="item-icon">
-                                            <GoCommentDiscussion/>
+                                            <GoComment/>
                                         </div>
                                     </label>
                                 </div>
+                                <div className="the-items-icons">
+                                    <div className="item-icon">
+                                        <BsBookmarkPlus/>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
