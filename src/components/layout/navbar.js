@@ -1,14 +1,15 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {BsCompass, BsChatDots, BsBriefcase} from "react-icons/bs";
-import {FiUsers, FiBell} from "react-icons/fi";
+import {BsCompass, BsQuestionCircle, BsChatDots, BsBriefcase} from "react-icons/bs";
+import {FiUsers,FiSettings, FiBell} from "react-icons/fi";
+
 import {
     BiSearch,
     BiMessageSquareError,
     BiMenu,
-    BiHomeAlt
+    BiHomeAlt,
+    BiLogOutCircle
 } from "react-icons/bi";
-import {SettingOutlined, LogoutOutlined, QuestionCircleOutlined} from '@ant-design/icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
 
@@ -143,10 +144,10 @@ class Navbar extends React.Component {
                                 <div style={{margin: '8px 0'}} className="line-divider"/>
                                 <div className="contents">
                                     <button className="btn btn-primary">View Profile</button>
-                                    <p><SettingOutlined style={styleIcons}/>Settings and privacy</p>
+                                    <p><FiSettings style={styleIcons}/>Settings and privacy</p>
                                     <p><BiMessageSquareError style={styleIcons}/>Feedback</p>
-                                    <p><QuestionCircleOutlined style={styleIcons}/>Help Center</p>
-                                    <p><LogoutOutlined style={styleIcons}/>Sign Out</p>
+                                    <p><BsQuestionCircle style={styleIcons}/>Help Center</p>
+                                    <p><BiLogOutCircle style={styleIcons}/>Sign Out</p>
                                 </div>
                             </div>
                         </div>
